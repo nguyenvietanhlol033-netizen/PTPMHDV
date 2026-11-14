@@ -1,0 +1,76 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - "Authorization"
+              - "Idempotency-Key"
+              - "Idempotent-Replayed"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        # Route 1: user-service (Xác thực, đăng ký, đăng nhập)
+        - id: user-service-auth
+          uri: ${USER_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/v1/auth/**
+
+        # Route 2: movie-service (Phim & Lịch chiếu)
+        - id: movie-service-movies
+          uri: ${MOVIE_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/movies/**
+
+        # API Sơ đồ ghế suất chiếu kết hợp trạng thái & phụ thu sang booking-service
+        - id: booking-service-showtime-seats
+          uri: ${BOOKING_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/showtimes/*/seats
+
+        - id: movie-service-showtimes
+          uri: ${MOVIE_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/v1/showtimes/**
+
+        # Route 3: venue-service (Rạp, Phòng chiếu, Ghế ngồi)
+        - id: venue-service-cinemas
+          uri: ${VENUE_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/cinemas/**
+
+        - id: venue-service-rooms
+          uri: ${VENUE_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/rooms/**
+
+        - id: venue-service-seats
+          uri: ${VENUE_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/v1/seats/**
+
+        # Route 4: booking-service (Đặt vé, Thanh toán, Danh sách vé)
+        - id: booking-service-tickets
+          uri: ${BOOKING_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/tickets/**
+
+        - id: booking-service-user-tickets
+          uri: ${BOOKING_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/v1/users/**

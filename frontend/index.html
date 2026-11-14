@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA CINEMAS - Trải Nghiệm Điện Ảnh Đẳng Cấp & Đặt Vé Trực Tuyến</title>
+    
+    <!-- Google Fonts hỗ trợ Tiếng Việt 100% không lỗi phông -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#f8fafc',
+                        surface: '#ffffff',
+                        card: '#ffffff',
+                        'card-hover': '#f1f5f9',
+                        gold: {
+                            DEFAULT: '#d97706',
+                            light: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        crimson: '#dc2626',
+                        emerald: '#16a34a',
+                    },
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                        heading: ['"Plus Jakarta Sans"', '"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="css/style.css?v=3.4">
+</head>
+<body class="bg-obsidian text-slate-800 min-h-screen flex flex-col font-sans selection:bg-amber-100 selection:text-amber-900">
+
+    <!-- ==================== HEADER & NAVBAR ==================== -->
+    <header class="header-glass sticky top-0 z-40">
+        <div class="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 h-20 py-4 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" onclick="app.switchView('schedule')" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-amber-50 border border-amber-300 text-gold flex items-center justify-center transition-colors group-hover:border-gold shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-tight text-slate-900">AURA</span>
+                    <span class="text-xs font-bold text-gold tracking-widest ml-1">CINEMAS</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center gap-1.5">
+                <button onclick="app.switchView('schedule')" id="nav-schedule" class="px-4 py-2 rounded-xl font-bold text-sm sm:text-base transition text-gold bg-amber-50 border border-amber-200 shadow-sm">
+                    Lịch Chiếu
+                </button>
+                <button onclick="app.switchView('all-movies')" id="nav-all-movies" class="px-4 py-2 rounded-xl font-semibold text-sm sm:text-base text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    Tất Cả Phim
+                </button>
+                <button onclick="app.switchView('now-showing')" id="nav-now-showing" class="px-4 py-2 rounded-xl font-semibold text-sm sm:text-base text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    Phim Đang Chiếu
+                </button>
+                <button onclick="app.switchView('coming-soon')" id="nav-coming-soon" class="px-4 py-2 rounded-xl font-semibold text-sm sm:text-base text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    Phim Sắp Chiếu
+                </button>
+                <button onclick="app.switchView('cinemas')" id="nav-cinemas" class="px-4 py-2 rounded-xl font-semibold text-sm sm:text-base text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    Rạp & Giá Vé
+                </button>
+                <button onclick="app.openMyTickets()" id="nav-my-tickets" class="px-4 py-2 rounded-xl font-semibold text-sm sm:text-base text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                    Vé Của Tôi
+                </button>
+            </nav>
+
+            <!-- Actions & Auth -->
+            <div class="flex items-center gap-3">
+                <!-- Backend Status Badge -->
+                <div id="backend-status" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-100 border border-slate-200 text-slate-600" title="Trạng thái kết nối Gateway">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald"></span>
+                    <span id="backend-status-text">Gateway: 8080</span>
+                </div>
+
+                <!-- User Actions Dropdown / Login -->
+                <div id="auth-actions-guest" class="flex items-center gap-2">
+                    <button onclick="app.openAuthModal('login')" class="px-4 py-2 text-sm font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition">
+                        Đăng Nhập
+                    </button>
+                    <button onclick="app.openAuthModal('register')" class="px-5 py-2 text-sm font-bold bg-gold text-white rounded-xl hover:bg-gold-dark shadow-sm transition">
+                        Đăng Ký
+                    </button>
+                </div>
+
+                <div id="auth-actions-user" class="hidden flex items-center gap-3">
+                    <!-- Admin Panel Button -->
+                    <button id="admin-panel-btn" onclick="app.openAdminModal()" class="hidden px-4 py-2 text-sm font-bold bg-amber-50 hover:bg-amber-100 text-gold border border-amber-300 rounded-xl transition flex items-center gap-2 shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                        <span>Cài Đặt Quản Trị</span>
+                    </button>
+
+                    <!-- User Profile Button -->
+                    <div class="relative group" id="user-dropdown-container">
+                        <button id="user-profile-btn" onclick="app.toggleUserDropdown(event)" class="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm font-bold hover:border-slate-400 shadow-sm transition focus:outline-none">
+                            <div class="w-7 h-7 rounded-full bg-amber-100 text-gold flex items-center justify-center font-bold text-xs uppercase" id="user-avatar">
+                                U
+                            </div>
+                            <span id="user-display-name" class="max-w-[130px] truncate text-slate-900">Khách</span>
+                            <svg id="user-dropdown-arrow" class="w-4 h-4 text-slate-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div id="user-dropdown-menu" class="absolute right-0 top-full pt-2 w-56 hidden group-hover:block z-50">
+                            <div class="bg-white border border-slate-200 rounded-2xl shadow-xl py-2 backdrop-blur-md">
+                                <div class="px-4 py-2.5 border-b border-slate-100 text-xs text-slate-500 flex items-center justify-between">
+                                    <span>Vai trò:</span>
+                                    <span id="user-role-badge" class="font-bold text-gold px-2.5 py-0.5 rounded-md bg-amber-50 border border-amber-200">CUSTOMER</span>
+                                </div>
+                                <button id="user-dropdown-admin-item" onclick="app.openAdminModal(); app.closeUserDropdown();" class="hidden w-full text-left px-4 py-2.5 text-xs text-gold hover:bg-amber-50 flex items-center gap-2.5 transition font-semibold border-b border-slate-100">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                                    <span>Vào Trang Quản Trị</span>
+                                </button>
+                                <button onclick="app.openMyTickets(); app.closeUserDropdown();" class="w-full text-left px-4 py-2.5 text-xs text-slate-700 hover:bg-slate-50 hover:text-gold flex items-center gap-2.5 transition font-medium">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                                    <span>Vé Của Tôi</span>
+                                </button>
+                                <button onclick="app.logout(); app.closeUserDropdown();" class="w-full text-left px-4 py-2.5 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition font-medium">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                                    <span>Đăng Xuất</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN HERO SLIDER ==================== -->
+    <section class="relative bg-gradient-to-b from-amber-50/50 via-slate-50 to-obsidian border-b border-slate-200/80 overflow-hidden">
+        <div class="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold bg-white text-slate-800 border border-slate-200 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-gold"></span>
+                        Phim Chiếu Rạp Mới Nhất
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black font-heading leading-[1.15] tracking-tight text-slate-900">
+                        Đặt Vé Xem Phim Nhanh Chóng & Thuận Tiện
+                    </h1>
+                    <p class="text-slate-600 text-base sm:text-lg max-w-2xl leading-relaxed font-medium">
+                        Thưởng thức các tác phẩm điện ảnh đỉnh cao tại hệ thống cụm rạp AURA Cinemas. Dễ dàng tra cứu suất chiếu, chọn vị trí ngồi ưa thích và nhận vé điện tử tức thì.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <a href="#schedule-section" onclick="app.switchView('schedule')" class="px-7 py-3.5 bg-gold hover:bg-gold-dark text-white font-bold rounded-xl shadow-md transition flex items-center gap-2.5 text-base">
+                            <span>Xem Lịch Chiếu Ngay</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        <button onclick="app.switchView('now-showing')" class="px-7 py-3.5 bg-white border border-slate-200 text-slate-800 font-bold rounded-xl hover:border-slate-400 hover:text-slate-900 shadow-sm transition text-base">
+                            Khám Phá Phim
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Hero Spotlight Cards Carousel -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative w-full aspect-[16/10] sm:aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group">
+                        <img id="hero-banner-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80" alt="Hero Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+                            <span class="inline-block px-3 py-1 bg-crimson text-white text-xs font-black rounded-md w-max mb-2 shadow">C16</span>
+                            <h3 id="hero-banner-title" class="text-xl sm:text-2xl font-black text-white leading-snug">DUNE: HÀNH TINH CÁT - PHẦN HAI</h3>
+                            <p class="text-sm text-slate-200 mt-1 font-medium">Chiếu tại tất cả các cụm rạp AURA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+    <main class="flex-grow max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+
+        <!-- ==================== VIEW 1: LỊCH CHIẾU (CHÍNH - Inspired by Beta Cinemas) ==================== -->
+        <section id="view-schedule" class="space-y-8">
+            
+            <!-- Bộ lọc Rạp & Tỉnh thành (Cinema Selector) -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-3.5 w-full sm:w-auto">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 text-gold flex items-center justify-center font-bold shadow-sm">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    </div>
+                    <div>
+                        <span class="text-xs sm:text-sm text-slate-500 block font-bold">BẠN ĐANG XEM TẠI RẠP:</span>
+                        <select id="select-cinema" onchange="app.onCinemaChange(this.value)" class="bg-slate-50 text-slate-900 font-extrabold text-base sm:text-lg rounded-xl border border-slate-200 px-4 py-2.5 focus:border-gold focus:outline-none cursor-pointer">
+                            <option value="1">AURA CINEMA - Landmark Grand (TP.HCM)</option>
+                            <option value="2">AURA CINEMA - Royal City (Hà Nội)</option>
+                            <option value="3">AURA CINEMA - Sài Gòn Centre (Quận 1)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Thống kê nhanh & Search input -->
+                <div class="relative w-full sm:w-80">
+                    <input type="text" id="schedule-search" oninput="app.filterScheduleMovies(this.value)" placeholder="Tìm tên phim, thể loại..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3 text-sm sm:text-base text-slate-800 placeholder-slate-400 focus:border-gold focus:bg-white focus:outline-none pl-11 shadow-sm font-medium">
+                    <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- Thanh chọn Ngày (Horizontal Date Tabs Ribbon) -->
+            <div>
+                <div class="flex items-center justify-between mb-3.5">
+                    <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 flex items-center gap-2.5">
+                        <span class="w-3 h-7 bg-gold rounded-full inline-block"></span>
+                        CHỌN NGÀY CHIẾU
+                    </h2>
+                    <span class="text-xs sm:text-sm text-slate-500 font-medium">Suất chiếu hiển thị theo ngày được chọn</span>
+                </div>
+
+                <div class="date-selector-container" id="date-tabs-list">
+                    <!-- Sẽ được render động bằng JavaScript -->
+                </div>
+            </div>
+
+            <!-- Bộ lọc thể loại cho Lịch Chiếu (Schedule Genre Quick Filters) -->
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl px-5 py-3.5 shadow-sm">
+                <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-600">
+                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    <span>Thể Loại:</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2.5" id="schedule-genre-filter-ribbon">
+                    <button onclick="app.filterScheduleByGenre('ALL')" data-genre="ALL" class="sched-genre-btn active px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-gold text-white transition border border-gold shadow-sm">
+                        Tất Cả
+                    </button>
+                    <button onclick="app.filterScheduleByGenre('Hành Động')" data-genre="Hành Động" class="sched-genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Hành Động
+                    </button>
+                    <button onclick="app.filterScheduleByGenre('Hoạt Hình')" data-genre="Hoạt Hình" class="sched-genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Hoạt Hình
+                    </button>
+                    <button onclick="app.filterScheduleByGenre('Kinh Dị')" data-genre="Kinh Dị" class="sched-genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Kinh Dị
+                    </button>
+                </div>
+            </div>
+
+            <!-- Danh sách Phim và Suất Chiếu theo ngày (Movie Showtimes Matrix) -->
+            <div class="space-y-6" id="schedule-movies-container">
+                <!-- Loading State ban đầu -->
+                <div class="text-center py-16 space-y-4">
+                    <div class="inline-block w-10 h-10 border-4 border-gold border-t-transparent rounded-full animate-spin"></div>
+                    <p class="text-slate-500 text-sm">Đang tải lịch chiếu từ hệ thống...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 2: PHIM ĐANG CHIẾU / PHIM SẮP CHIẾU / TẤT CẢ PHIM ==================== -->
+        <section id="view-movies-grid" class="hidden space-y-6">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 id="movies-grid-title" class="text-2xl sm:text-3xl font-black font-heading text-slate-900">DANH SÁCH PHIM</h2>
+                <p id="movies-grid-subtitle" class="text-slate-500 text-sm sm:text-base mt-1 font-medium">Các tác phẩm điện ảnh đặc sắc trên hệ thống AURA Cinemas</p>
+            </div>
+
+            <!-- Thanh lọc thể loại: Tất Cả, Phim Hành Động, Phim Hoạt Hình, Phim Kinh Dị -->
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-600">
+                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                    <span>Thể Loại:</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2.5" id="genre-filter-ribbon">
+                    <button onclick="app.filterMoviesByGenre('ALL')" data-genre="ALL" class="genre-btn active px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-gold text-white shadow-sm transition border border-gold">
+                        Tất Cả (<span id="genre-count-all">0</span>)
+                    </button>
+                    <button onclick="app.filterMoviesByGenre('Hành Động')" data-genre="Hành Động" class="genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Hành Động (<span id="genre-count-action">0</span>)
+                    </button>
+                    <button onclick="app.filterMoviesByGenre('Hoạt Hình')" data-genre="Hoạt Hình" class="genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Hoạt Hình (<span id="genre-count-anim">0</span>)
+                    </button>
+                    <button onclick="app.filterMoviesByGenre('Kinh Dị')" data-genre="Kinh Dị" class="genre-btn px-4 py-2 text-xs sm:text-sm font-bold rounded-xl bg-white text-slate-600 hover:text-gold border border-slate-200 hover:border-gold transition">
+                        Kinh Dị (<span id="genre-count-horror">0</span>)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Movie Grid -->
+            <div id="movies-grid-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-6 sm:gap-8">
+                <!-- Dynamic Movie Cards -->
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 3: RẠP & BẢNG GIÁ VÉ ==================== -->
+        <section id="view-cinemas" class="hidden space-y-8">
+            <div class="border-b border-slate-200 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900">HỆ THỐNG RẠP & BIỂU GIÁ VÉ TIÊU CHUẨN</h2>
+                <p class="text-slate-500 text-sm sm:text-base mt-1 font-medium">Trang bị máy chiếu Laser 4K, hệ thống âm thanh Dolby Atmos & cụm ghế bọc da cao cấp</p>
+            </div>
+
+            <!-- Cinema List Cards -->
+            <div id="cinemas-list-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Dynamic Cinema Info Cards -->
+            </div>
+
+            <!-- Standard Price Table -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-7 sm:p-8 shadow-sm space-y-5">
+                <h3 class="text-xl font-black text-gold flex items-center gap-2.5">
+                    <svg class="w-6 h-6 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    <span>BIỂU PHÍ PHỤ THU LOẠI GHẾ (ĐỒNG BỘ TOÀN HỆ THỐNG)</span>
+                </h3>
+                <div class="overflow-x-auto rounded-xl border border-slate-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-50">
+                            <tr class="border-b border-slate-200 text-slate-700 font-bold text-sm sm:text-base">
+                                <th class="py-4 px-6">Loại Ghế</th>
+                                <th class="py-4 px-6">Đặc Điểm</th>
+                                <th class="py-4 px-6">Mức Phụ Thu</th>
+                                <th class="py-4 px-6">Quy Định</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700 text-sm sm:text-base font-medium">
+                            <tr class="hover:bg-slate-50/50">
+                                <td class="py-4 px-6 font-bold text-slate-800 flex items-center gap-2.5"><span class="w-4 h-4 rounded-md bg-slate-300 inline-block border border-slate-400"></span> Ghế Tiêu Chuẩn (STANDARD)</td>
+                                <td class="py-4 px-6 text-slate-500">Tầm nhìn vừa vặn, đệm êm ái</td>
+                                <td class="py-4 px-6 font-bold text-emerald-700">+ 0 VNĐ (Theo giá gốc)</td>
+                                <td class="py-4 px-6 text-xs sm:text-sm text-slate-500">Áp dụng cho mọi khách hàng</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50">
+                                <td class="py-4 px-6 font-bold text-amber-700 flex items-center gap-2.5"><span class="w-4 h-4 rounded-md bg-amber-400 inline-block border border-amber-500"></span> Ghế VIP (VIP SEAT)</td>
+                                <td class="py-4 px-6 text-slate-500">Vị trí vàng trung tâm phòng chiếu, góc nhìn hoàn hảo</td>
+                                <td class="py-4 px-6 font-bold text-gold">+ 20.000 VNĐ</td>
+                                <td class="py-4 px-6 text-xs sm:text-sm text-slate-500">Cộng trực tiếp vào giá vé</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/50">
+                                <td class="py-4 px-6 font-bold text-pink-600 flex items-center gap-2.5"><span class="w-6 h-4 rounded-md bg-pink-400 inline-block border border-pink-500"></span> Ghế Đôi (SWEETBOX)</td>
+                                <td class="py-4 px-6 text-slate-500">Dành riêng cho 2 người, có vách ngăn riêng tư ở hàng cuối</td>
+                                <td class="py-4 px-6 font-bold text-pink-600">+ 50.000 VNĐ</td>
+                                <td class="py-4 px-6 text-xs sm:text-sm text-slate-500">Bao gồm chỗ ngồi cho 2 người</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== MODAL 1: CHỌN GHẾ NGỒI (SEAT SELECTION MODAL) ==================== -->
+    <div id="seat-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-5xl rounded-3xl shadow-2xl overflow-hidden my-auto relative flex flex-col max-h-[94vh]">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-200 flex items-center justify-between bg-slate-50/90">
+                <div>
+                    <h3 id="seat-modal-movie-title" class="text-xl sm:text-2xl font-black font-heading text-slate-900">DUNE: HÀNH TINH CÁT 2</h3>
+                    <div class="flex items-center gap-3 text-sm text-slate-500 mt-1 font-medium">
+                        <span id="seat-modal-cinema-name" class="text-gold font-bold">Landmark Grand</span>
+                        <span>•</span>
+                        <span id="seat-modal-room-name">Phòng 01</span>
+                        <span>•</span>
+                        <span id="seat-modal-time">19:15, 06/11/2026</span>
+                    </div>
+                </div>
+
+                <!-- Hold Countdown & Close -->
+                <div class="flex items-center gap-3">
+                    <div id="hold-timer-container" class="hidden">
+                        <div class="countdown-badge">
+                            <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                            <span id="hold-timer-text">10:00</span>
+                        </div>
+                    </div>
+                    <button onclick="app.closeSeatModal()" class="w-10 h-10 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 flex items-center justify-center font-bold text-lg transition">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Seat Map Area -->
+            <div class="p-6 sm:p-8 overflow-y-auto flex-grow flex flex-col items-center">
+                
+                <!-- Past Showtime Alert (nếu suất chiếu đã kết thúc) -->
+                <div id="seat-modal-past-alert" class="hidden w-full max-w-2xl bg-amber-50 border border-amber-300 text-amber-900 rounded-xl p-3 text-xs sm:text-sm font-semibold mb-4 text-center"></div>
+
+                <!-- Curved Screen Display -->
+                <div class="screen-container w-full">
+                    <div class="screen-curve"></div>
+                    <div class="screen-label">MÀN HÌNH CHIẾU CHÍNH (SCREEN)</div>
+                </div>
+
+                <!-- Interactive Seat Matrix -->
+                <div id="seat-grid-wrapper" class="w-full flex justify-center py-4">
+                    <div id="seat-grid" class="seat-grid">
+                        <!-- Ghế sẽ được vẽ linh hoạt từ API venue-service -->
+                    </div>
+                </div>
+
+                <!-- Seat Legend (Chú thích) -->
+                <div class="flex flex-wrap items-center justify-center gap-6 mt-8 pt-6 border-t border-slate-200 w-full max-w-2xl">
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-slate-100 border border-slate-300"></div>
+                        <span class="text-slate-700">Ghế Thường</span>
+                    </div>
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-amber-100 border border-amber-400"></div>
+                        <span class="text-amber-800 font-bold">Ghế VIP (+20k)</span>
+                    </div>
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-pink-100 border border-pink-400"></div>
+                        <span class="text-pink-700 font-bold">Sweetbox (+50k)</span>
+                    </div>
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-emerald border border-emerald-600"></div>
+                        <span class="text-emerald-700 font-bold">Đang Chọn</span>
+                    </div>
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-slate-200 border border-slate-300 opacity-70 flex items-center justify-center text-xs text-slate-500 font-bold">✕</div>
+                        <span class="text-slate-500">Đã Bán / Giữ</span>
+                    </div>
+                    <div class="seat-legend-item">
+                        <div class="seat-legend-box bg-slate-200 border border-dashed border-slate-400 opacity-80"></div>
+                        <span class="text-slate-500">Bảo Trì</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer: Summary & Booking Action -->
+            <div class="p-6 border-t border-slate-200 bg-slate-50/90 flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div class="text-center sm:text-left">
+                    <div class="text-xs sm:text-sm text-slate-500 font-medium">Ghế bạn đang chọn:</div>
+                    <div id="selected-seat-label" class="font-extrabold text-gold text-xl sm:text-2xl mt-0.5">Chưa chọn ghế nào</div>
+                </div>
+
+                <div class="flex items-center gap-6 sm:gap-8">
+                    <div class="text-right">
+                        <div class="text-xs sm:text-sm text-slate-500 font-medium">TỔNG TẠM TÍNH:</div>
+                        <div id="selected-seat-price" class="text-2xl sm:text-3xl font-black text-slate-900">0 VNĐ</div>
+                    </div>
+
+                    <button id="btn-proceed-booking" onclick="app.proceedBooking()" disabled class="px-8 py-3.5 rounded-xl bg-gold hover:bg-gold-dark text-white font-bold text-base shadow-md transition disabled:opacity-40 disabled:cursor-not-allowed">
+                        Tiến Hành Đặt Vé
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 2: THANH TOÁN (CHECKOUT MODAL) ==================== -->
+    <div id="checkout-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-lg rounded-2xl shadow-2xl p-6 relative">
+            <button onclick="app.closeCheckoutModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700">✕</button>
+
+            <div class="text-center space-y-2 mb-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-50 border border-amber-200 text-gold shadow-sm">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold font-heading text-slate-900">XÁC NHẬN THANH TOÁN</h3>
+                <p class="text-xs text-slate-500">Vui lòng thanh toán trước khi thời gian giữ ghế kết thúc</p>
+            </div>
+
+            <!-- Ticket Summary Card -->
+            <div class="ticket-pass p-5 space-y-3 mb-6">
+                <div class="flex justify-between items-center text-xs text-slate-500">
+                    <span>MÃ VÉ TẠM THỜI:</span>
+                    <span id="checkout-ticket-id" class="font-mono font-bold text-gold">#TK-1001</span>
+                </div>
+                <h4 id="checkout-movie-title" class="font-bold text-base text-slate-900">DUNE: HÀNH TINH CÁT 2</h4>
+                <div class="text-xs text-slate-600 space-y-1">
+                    <div>Rạp: <span id="checkout-cinema-name" class="font-medium text-slate-800">Landmark Grand</span></div>
+                    <div>Phòng: <span id="checkout-room-name" class="font-medium text-slate-800">Phòng 01</span> • Suất: <span id="checkout-time" class="font-medium text-gold">19:15</span></div>
+                    <div>Vị trí ghế: <span id="checkout-seat-name" class="font-bold text-emerald-700 text-sm">E05 (VIP)</span></div>
+                </div>
+
+                <div class="ticket-divider"></div>
+
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-slate-500">TỔNG SỐ TIỀN:</span>
+                    <span id="checkout-final-price" class="text-2xl font-black text-gold">110.000 VNĐ</span>
+                </div>
+            </div>
+
+            <!-- Payment Simulation Options -->
+            <div class="space-y-3 mb-6">
+                <label class="block text-xs font-semibold text-slate-500">CHỌN PHƯƠNG THỨC THANH TOÁN:</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center gap-2 p-3 rounded-xl border border-amber-300 bg-amber-50/50 cursor-pointer">
+                        <input type="radio" name="payment-method" value="MOCK_QR" checked class="text-gold focus:ring-gold">
+                        <span class="text-xs font-bold text-slate-800">Quét Mã VietQR (Giả lập)</span>
+                    </label>
+                    <label class="flex items-center gap-2 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer hover:border-slate-300">
+                        <input type="radio" name="payment-method" value="MOCK_CARD" class="text-gold focus:ring-gold">
+                        <span class="text-xs font-bold text-slate-800">Thẻ Visa / ATM Nội địa</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Confirm / Cancel Actions -->
+            <div class="space-y-3">
+                <button id="btn-confirm-payment" onclick="app.executePayment()" class="w-full py-3 bg-emerald hover:brightness-105 text-white font-bold rounded-lg shadow-sm transition flex items-center justify-center gap-2">
+                    <span>Xác Nhận Đã Thanh Toán</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </button>
+                <button onclick="app.cancelCurrentTicket()" class="w-full py-2.5 text-xs text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition">
+                    Hủy Đơn Đặt Vé Này
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 3: VÉ ĐIỆN TỬ THÀNH CÔNG (SUCCESS TICKET PASS) ==================== -->
+    <div id="ticket-pass-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-amber-200 w-full max-w-md rounded-2xl shadow-2xl p-6 relative text-center space-y-4">
+            <button onclick="app.closeTicketPassModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700">✕</button>
+
+            <div class="w-14 h-14 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200 shadow-sm">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h3 class="text-2xl font-black font-heading text-slate-900">THANH TOÁN THÀNH CÔNG!</h3>
+            <p class="text-xs text-slate-600">Chúc bạn có những giây phút thưởng thức phim tuyệt vời tại AURA CINEMAS.</p>
+
+            <!-- Digital Boarding Pass -->
+            <div class="ticket-pass p-5 text-left space-y-2 mt-4 bg-gradient-to-br from-amber-50/40 via-white to-slate-50 border border-amber-200/80 shadow-sm">
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-500">TRẠNG THÁI:</span>
+                    <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-extrabold text-xs">PAID - ĐÃ XÁC NHẬN</span>
+                </div>
+                <h4 id="pass-movie-title" class="font-extrabold text-lg text-slate-900">DUNE: HÀNH TINH CÁT 2</h4>
+                <div class="text-xs text-slate-600 space-y-0.5">
+                    <div>Rạp: <span id="pass-cinema" class="font-medium text-slate-800">Landmark Grand</span></div>
+                    <div>Phòng: <span id="pass-room" class="font-medium text-slate-800">Phòng 01</span> • Ghế: <span id="pass-seat" class="font-bold text-gold text-sm">E05</span></div>
+                    <div>Suất chiếu: <span id="pass-time" class="font-semibold text-slate-900">19:15 - 06/11/2026</span></div>
+                </div>
+
+                <div class="ticket-divider"></div>
+
+                <!-- QR Code Simulation -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] text-slate-400 uppercase font-semibold">Mã Tra Cứu Vé:</div>
+                        <div id="pass-code" class="font-mono text-sm font-bold text-gold tracking-widest">AURA-894721</div>
+                    </div>
+                    <div class="w-16 h-16 bg-white p-1 rounded-lg flex items-center justify-center border border-slate-200 shadow-sm">
+                        <!-- Simple SVG QR Pattern -->
+                        <svg viewBox="0 0 100 100" class="w-full h-full text-slate-900" fill="currentColor">
+                            <rect x="10" y="10" width="30" height="30" rx="3"/>
+                            <rect x="16" y="16" width="18" height="18" fill="white"/>
+                            <rect x="20" y="20" width="10" height="10"/>
+                            <rect x="60" y="10" width="30" height="30" rx="3"/>
+                            <rect x="66" y="16" width="18" height="18" fill="white"/>
+                            <rect x="70" y="20" width="10" height="10"/>
+                            <rect x="10" y="60" width="30" height="30" rx="3"/>
+                            <rect x="16" y="66" width="18" height="18" fill="white"/>
+                            <rect x="20" y="70" width="10" height="10"/>
+                            <rect x="50" y="50" width="10" height="10"/>
+                            <rect x="70" y="60" width="15" height="15"/>
+                            <rect x="50" y="75" width="20" height="15"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="app.openMyTickets()" class="w-full py-2.5 bg-white border border-gold text-gold font-semibold rounded-lg hover:bg-gold hover:text-white transition shadow-sm">
+                Xem Trong "Vé Của Tôi"
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 4: VÉ CỦA TÔI (MY TICKETS MODAL) ==================== -->
+    <div id="my-tickets-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-3xl rounded-2xl shadow-2xl p-6 relative flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-50 border border-amber-200 text-gold flex items-center justify-center shadow-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold font-heading text-slate-900">DANH SÁCH VÉ CỦA TÔI</h3>
+                        <p class="text-xs text-slate-500">Lịch sử đặt vé và trạng thái thanh toán</p>
+                    </div>
+                </div>
+                <button onclick="app.closeMyTicketsModal()" class="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+
+            <!-- Tickets List Container -->
+            <div id="my-tickets-list" class="py-4 overflow-y-auto space-y-3 flex-grow">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 5: ĐĂNG NHẬP / ĐĂNG KÝ ==================== -->
+    <div id="auth-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
+            <button onclick="app.closeAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700">✕</button>
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 mb-6">
+                <button id="auth-tab-login" onclick="app.switchAuthTab('login')" class="flex-1 py-3 text-center font-bold text-sm text-gold border-b-2 border-gold transition">
+                    Đăng Nhập
+                </button>
+                <button id="auth-tab-register" onclick="app.switchAuthTab('register')" class="flex-1 py-3 text-center font-bold text-sm text-slate-500 border-b-2 border-transparent hover:text-slate-800 transition">
+                    Đăng Ký
+                </button>
+            </div>
+
+            <!-- Form -->
+            <form id="auth-form" onsubmit="app.handleAuthSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">TÊN ĐĂNG NHẬP (USERNAME)</label>
+                    <input type="text" id="auth-username" required placeholder="Nhập username của bạn..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:border-gold focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">MẬT KHẨU (PASSWORD)</label>
+                    <input type="password" id="auth-password" required placeholder="Nhập mật khẩu..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:border-gold focus:bg-white focus:outline-none">
+                </div>
+
+                <div id="auth-error-msg" class="hidden text-xs text-red-600 bg-red-50 p-2.5 rounded-lg border border-red-200"></div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full py-2.5 bg-gold hover:bg-gold-dark text-white font-semibold rounded-lg shadow-sm transition">
+                    Đăng Nhập
+                </button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <span class="text-xs text-slate-500">Tài khoản mẫu Admin: <b class="text-gold">admin</b> / <b class="text-gold">Admin@123456</b></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FULLSCREEN ADMIN PORTAL (UI/UX PRO MAX) ==================== -->
+    <div id="admin-modal" class="hidden">
+        <!-- 1. TOP HEADER BAR -->
+        <header class="h-20 border-b border-slate-200 bg-white/95 px-6 sm:px-8 py-3.5 flex items-center justify-between flex-shrink-0 z-20 backdrop-blur-md shadow-sm">
+            <!-- Brand & Status -->
+            <div class="flex items-center gap-3.5 sm:gap-5">
+                <div class="w-11 h-11 rounded-xl bg-gold flex items-center justify-center text-white flex-shrink-0 font-bold shadow-sm">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/>
+                    </svg>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-xl font-black font-heading text-slate-900 tracking-wide">AURA CINEMA</span>
+                        <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-amber-50 text-gold border border-amber-300 uppercase tracking-wider">Bảng Quản Trị</span>
+                    </div>
+                    <span class="text-xs text-slate-500 block font-medium mt-0.5">Hệ thống quản lý cụm rạp & phòng chiếu</span>
+                </div>
+                <div class="h-7 w-px bg-slate-200 hidden md:block"></div>
+                <!-- Gateway Health Pill -->
+                <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold">
+                    <span id="adm-gateway-dot" class="w-2.5 h-2.5 rounded-full bg-emerald"></span>
+                    <span id="adm-gateway-text" class="text-slate-700 text-xs font-medium">Hệ thống kết nối trực tuyến</span>
+                </div>
+            </div>
+
+            <!-- Center Clock -->
+            <div class="hidden lg:flex items-center gap-2 text-sm font-mono font-bold text-slate-700 bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200">
+                <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                <span id="adm-live-clock">--:--:--</span>
+            </div>
+
+            <!-- Right Controls -->
+            <div class="flex items-center gap-2.5 sm:gap-3.5">
+                <button onclick="app.refreshAdminData()" title="Tải lại toàn bộ dữ liệu" class="p-2 sm:px-3.5 sm:py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 hover:text-gold text-xs sm:text-sm font-bold border border-slate-200 shadow-sm transition flex items-center gap-2">
+                    <svg id="adm-refresh-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    <span class="hidden sm:inline">Làm Mới</span>
+                </button>
+
+                <!-- Admin Profile Chip -->
+                <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-700">
+                    <div class="w-7 h-7 rounded-full bg-amber-100 text-gold font-bold flex items-center justify-center text-xs">A</div>
+                    <span class="font-bold text-slate-900 hidden sm:inline">admin</span>
+                    <span class="px-2 py-0.5 rounded bg-amber-100 text-gold font-mono text-[11px] font-bold">ADMIN</span>
+                </div>
+
+                <!-- Quay Lại Trang Chủ Khách Hàng -->
+                <button onclick="app.closeAdminModal()" title="Quay lại giao diện xem phim & đặt vé của khách hàng" class="px-4 py-2 rounded-xl bg-amber-50 text-gold hover:bg-gold hover:text-white border border-amber-300 text-xs sm:text-sm font-bold transition flex items-center gap-2 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    <span>← Về Trang Khách Hàng</span>
+                </button>
+
+                <!-- Đăng Xuất Admin Button -->
+                <button onclick="app.adminLogout()" title="Đăng xuất tài khoản Admin để đăng nhập tài khoản Khách hàng" class="px-3.5 py-2 rounded-xl bg-red-50 text-red-600 hover:bg-red-600 hover:text-white border border-red-200 text-xs sm:text-sm font-bold transition flex items-center gap-2 shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    <span>Đăng Xuất</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- 2. MAIN WORKSPACE CONTAINER -->
+        <div class="flex-1 flex overflow-hidden">
+            <!-- LEFT SIDEBAR -->
+            <aside class="w-64 lg:w-72 bg-white border-r border-slate-200 flex flex-col justify-between p-4 flex-shrink-0 select-none overflow-y-auto">
+                <div class="space-y-2">
+                    <div class="px-3 py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Danh Mục Quản Trị</div>
+
+                    <button onclick="app.switchAdminTab('overview')" id="adm-nav-overview" class="adm-nav-btn active">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        <span class="flex-1 text-left">Tổng Quan & KPIs</span>
+                    </button>
+
+                    <button onclick="app.switchAdminTab('movies')" id="adm-nav-movies" class="adm-nav-btn">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                        <span class="flex-1 text-left">Quản Lý Phim</span>
+                        <span id="adm-badge-movies-count" class="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">--</span>
+                    </button>
+
+                    <button onclick="app.switchAdminTab('showtimes')" id="adm-nav-showtimes" class="adm-nav-btn">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span class="flex-1 text-left">Lịch Chiếu & Suất</span>
+                        <span id="adm-badge-showtimes-count" class="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">--</span>
+                    </button>
+
+                    <button onclick="app.switchAdminTab('seats')" id="adm-nav-seats" class="adm-nav-btn">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        <span class="flex-1 text-left">Sơ Đồ Phòng & Ghế</span>
+                        <span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-50 text-gold border border-amber-300">Visual</span>
+                    </button>
+
+                    <button onclick="app.switchAdminTab('tickets')" id="adm-nav-tickets" class="adm-nav-btn">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                        <span class="flex-1 text-left">Quản Lý Vé & Đặt Chỗ</span>
+                        <span id="adm-badge-tickets-count" class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">--</span>
+                    </button>
+
+                    <button onclick="app.switchAdminTab('system')" id="adm-nav-system" class="adm-nav-btn">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                        <span class="flex-1 text-left">Hệ Thống & Dịch Vụ</span>
+                    </button>
+                </div>
+
+                <!-- Sidebar Footer: Infrastructure Status -->
+                <div class="pt-4 border-t border-slate-100 space-y-2 text-xs">
+                    <div class="flex items-center justify-between text-slate-500 px-1">
+                        <span>Trạng thái máy chủ:</span>
+                        <span class="inline-flex items-center gap-1.5 text-emerald-700 font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-emerald"></span>
+                            Hoạt động
+                        </span>
+                    </div>
+                    <div class="text-[11px] text-slate-400 px-1">
+                        Phiên bản: v2.4 (Enterprise)
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN WORKSPACE CONTENT -->
+            <main class="flex-1 overflow-y-auto p-6 sm:p-8 lg:p-10 space-y-8 bg-slate-50">
+
+                <!-- ==================== PANE 1: TỔNG QUAN & KPIS ==================== -->
+                <section id="admin-pane-overview" class="space-y-6">
+                    <!-- Title Bar -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Bảng Thống Kê Tổng Quan</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Theo dõi thời gian thực doanh thu, suất chiếu, tình trạng phòng vé và các microservices</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-slate-500">Kỳ báo cáo:</span>
+                            <span class="px-3 py-1 rounded-lg bg-white border border-slate-200 text-xs font-bold text-gold shadow-sm">Tháng Hiện Tại</span>
+                        </div>
+                    </div>
+
+                    <!-- 4 KPI Metrics -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- KPI 1 -->
+                        <div class="kpi-card">
+                            <div class="flex items-center justify-between text-slate-500 mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider">Doanh Thu Vé (PAID)</span>
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold border border-emerald-200">₫</div>
+                            </div>
+                            <div class="text-2xl lg:text-3xl font-black font-heading text-slate-900 tracking-tight" id="adm-kpi-revenue">0 ₫</div>
+                            <div class="mt-2 text-[11px] text-emerald-700 flex items-center gap-1 font-semibold">
+                                <span>↑ Cập nhật tự động</span>
+                                <span class="text-slate-500">từ tất cả vé đã thanh toán</span>
+                            </div>
+                        </div>
+
+                        <!-- KPI 2 -->
+                        <div class="kpi-card">
+                            <div class="flex items-center justify-between text-slate-500 mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider">Tổng Vé Xuất Hệ Thống</span>
+                                <div class="w-8 h-8 rounded-lg bg-amber-50 text-gold flex items-center justify-center border border-amber-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                                </div>
+                            </div>
+                            <div class="text-2xl lg:text-3xl font-black font-heading text-slate-900 tracking-tight" id="adm-kpi-tickets">0 vé</div>
+                            <div class="mt-2 text-[11px] text-slate-500 flex items-center gap-2">
+                                <span id="adm-kpi-tickets-paid" class="text-emerald-700 font-bold">0 Đã Trả</span> • 
+                                <span id="adm-kpi-tickets-pending" class="text-amber-800 font-bold">0 Đang Giữ</span>
+                            </div>
+                        </div>
+
+                        <!-- KPI 3 -->
+                        <div class="kpi-card">
+                            <div class="flex items-center justify-between text-slate-500 mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider">Kho Phim Đang Khai Thác</span>
+                                <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"/></svg>
+                                </div>
+                            </div>
+                            <div class="text-2xl lg:text-3xl font-black font-heading text-slate-900 tracking-tight" id="adm-kpi-movies">37 bộ phim</div>
+                            <div class="mt-2 text-[11px] text-slate-500">
+                                <span id="adm-kpi-movies-showing" class="text-gold font-bold">-- Đang Chiếu</span> • 
+                                <span id="adm-kpi-movies-coming" class="text-slate-600">-- Sắp Chiếu</span>
+                            </div>
+                        </div>
+
+                        <!-- KPI 4 -->
+                        <div class="kpi-card">
+                            <div class="flex items-center justify-between text-slate-500 mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider">Hạ Tầng Rạp & Phòng</span>
+                                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                </div>
+                            </div>
+                            <div class="text-2xl lg:text-3xl font-black font-heading text-slate-900 tracking-tight">3 Rạp • 9 Phòng</div>
+                            <div class="mt-2 text-[11px] text-purple-700 font-semibold">
+                                540 ghế chuẩn IMAX, Dolby & VIP
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Operation Launchers -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Thao Tác Nhanh (Quick Actions)</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <button onclick="app.openMovieFormModal()" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-gold hover:bg-amber-50/30 text-left transition group">
+                                <div class="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 text-gold flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                </div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-gold">Thêm Phim Mới</div>
+                                <div class="text-[10px] text-slate-500 mt-0.5">Thêm vào kho phim</div>
+                            </button>
+                            <button onclick="app.openCreateShowtimeModal()" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-gold hover:bg-amber-50/30 text-left transition group">
+                                <div class="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                </div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-gold">Tạo Suất Chiếu</div>
+                                <div class="text-[10px] text-slate-500 mt-0.5">Xếp lịch cho các phòng</div>
+                            </button>
+                            <button onclick="app.switchAdminTab('seats')" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-gold hover:bg-amber-50/30 text-left transition group">
+                                <div class="w-8 h-8 rounded-lg bg-purple-50 border border-purple-200 text-purple-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                </div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-gold">Sơ Đồ Ghế Trực Quan</div>
+                                <div class="text-[10px] text-slate-500 mt-0.5">Khóa/bảo trì 1-click</div>
+                            </button>
+                            <button onclick="app.switchAdminTab('tickets')" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 hover:border-gold hover:bg-amber-50/30 text-left transition group">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                                </div>
+                                <div class="text-xs font-bold text-slate-800 group-hover:text-gold">Quản Lý Vé Đã Đặt</div>
+                                <div class="text-[10px] text-slate-500 mt-0.5">Xem & duyệt trạng thái</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Tickets Preview -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Giao Dịch Đặt Vé Mới Nhất</h3>
+                            <button onclick="app.switchAdminTab('tickets')" class="text-xs text-gold hover:underline font-semibold">Xem toàn bộ vé →</button>
+                        </div>
+                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                            <table class="w-full adm-table text-left">
+                                <thead>
+                                    <tr>
+                                        <th>MÃ VÉ</th>
+                                        <th>USER ID</th>
+                                        <th>SUẤT CHIẾU</th>
+                                        <th>MÃ GHẾ</th>
+                                        <th>GIÁ TIỀN</th>
+                                        <th>TRẠNG THÁI</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-recent-tickets-tbody">
+                                    <tr><td colspan="6" class="text-center py-4 text-slate-500 text-xs">Đang tải dữ liệu vé...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== PANE 2: QUẢN LÝ PHIM ==================== -->
+                <section id="admin-pane-movies" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Quản Lý Danh Sách Phim</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Toàn bộ phim được đồng bộ trực tiếp với CSDL `movie-service` (Port 8082)</p>
+                        </div>
+                        <button onclick="app.openMovieFormModal()" class="px-4 py-2 rounded-lg bg-gold text-white font-semibold text-xs hover:bg-gold-dark transition flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Thêm Phim Mới</span>
+                        </button>
+                    </div>
+
+                    <!-- Search & Filter Controls -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="relative">
+                            <input type="text" id="adm-movie-search" oninput="app.filterAdminMovies()" placeholder="Tìm theo tên bộ phim..." class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-gold shadow-sm">
+                            <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        </div>
+                        <div>
+                            <select id="adm-movie-genre-filter" onchange="app.filterAdminMovies()" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:border-gold shadow-sm">
+                                <option value="ALL">-- Tất cả thể loại --</option>
+                                <option value="Hành Động">Hành Động</option>
+                                <option value="Hoạt Hình">Hoạt Hình</option>
+                                <option value="Kinh Dị">Kinh Dị</option>
+                                <option value="Tâm Lý">Tâm Lý / Tình Cảm</option>
+                                <option value="Hài">Hài Hước</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select id="adm-movie-status-filter" onchange="app.filterAdminMovies()" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 focus:border-gold shadow-sm">
+                                <option value="ALL">-- Tất cả trạng thái --</option>
+                                <option value="NOW_SHOWING">NOW_SHOWING (Đang Chiếu)</option>
+                                <option value="COMING_SOON">COMING_SOON (Sắp Chiếu)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Movies Data Table -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full adm-table text-left">
+                                <thead>
+                                    <tr>
+                                        <th class="w-16">ID</th>
+                                        <th>POSTER & TÊN PHIM</th>
+                                        <th>THỂ LOẠI</th>
+                                        <th>THỜI LƯỢNG</th>
+                                        <th>NĂM</th>
+                                        <th>TRẠNG THÁI</th>
+                                        <th class="text-right">THAO TÁC</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-movies-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== PANE 3: QUẢN LÝ SUẤT CHIẾU ==================== -->
+                <section id="admin-pane-showtimes" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Lịch Chiếu & Suất Chiếu</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Xếp lịch chiếu cho 3 cụm rạp, 9 phòng chiếu với tính năng kiểm tra chống trùng giờ tự động</p>
+                        </div>
+                        <button onclick="app.openCreateShowtimeModal()" class="px-4 py-2 rounded-lg bg-gold text-white font-semibold text-xs hover:bg-gold-dark transition flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            <span>Tạo Suất Chiếu Mới</span>
+                        </button>
+                    </div>
+
+                    <!-- Filter Bar -->
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white border border-slate-200 rounded-xl p-3.5 shadow-sm">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1">CỤM RẠP</label>
+                            <select id="adm-st-filter-cinema" onchange="app.onAdminShowtimeFilterChange()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                <option value="ALL">-- Tất Cả 3 Cụm Rạp --</option>
+                                <option value="1">Landmark Grand (TP.HCM)</option>
+                                <option value="2">Royal City (Hà Nội)</option>
+                                <option value="3">Sài Gòn Centre (Quận 1)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1">PHÒNG CHIẾU</label>
+                            <select id="adm-st-filter-room" onchange="app.filterAdminShowtimesTable()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                <option value="ALL">-- Tất Cả Phòng (1 - 9) --</option>
+                                <option value="1">Phòng 01 (IMAX Laser)</option>
+                                <option value="2">Phòng 02 (Dolby Atmos)</option>
+                                <option value="3">Phòng VIP 03 (Gold Class)</option>
+                                <option value="4">Phòng 01 (Starium 3D)</option>
+                                <option value="5">Phòng 02 (Dolby 7.1)</option>
+                                <option value="6">Phòng VIP 03 (Royal Lounge)</option>
+                                <option value="7">Phòng 01 (ScreenX 270°)</option>
+                                <option value="8">Phòng 02 (Dolby Atmos)</option>
+                                <option value="9">Phòng VIP 03 (L'amour)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1">NGÀY CHIẾU</label>
+                            <input type="date" id="adm-st-filter-date" onchange="app.filterAdminShowtimesTable()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-500 mb-1">BỘ PHIM</label>
+                            <select id="adm-st-filter-movie" onchange="app.filterAdminShowtimesTable()" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                <option value="ALL">-- Tất Cả Phim --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Showtimes Data Table -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full adm-table text-left">
+                                <thead>
+                                    <tr>
+                                        <th class="w-16">ID</th>
+                                        <th>GIỜ & NGÀY</th>
+                                        <th>BỘ PHIM</th>
+                                        <th>CỤM RẠP & PHÒNG CHIẾU</th>
+                                        <th>GIÁ VÉ GỐC</th>
+                                        <th>TRẠNG THÁI</th>
+                                        <th class="text-right">THAO TÁC</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-showtimes-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== PANE 4: SƠ ĐỒ PHÒNG & GHẾ (VISUAL SEAT MAP) ==================== -->
+                <section id="admin-pane-seats" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Sơ Đồ Phòng Chiếu & Khóa Ghế Trực Quan</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Bấm trực tiếp vào bất kỳ vị trí ghế nào trên màn hình để Khóa, Bảo trì (PATCH API) tức thì</p>
+                        </div>
+                        <!-- Room Selector Controls -->
+                        <div class="flex flex-wrap items-center gap-2">
+                            <select id="adm-seats-cinema-select" onchange="app.onAdminSeatCinemaChange(this.value)" class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-800 shadow-sm">
+                                <option value="1">Landmark Grand (TP.HCM)</option>
+                                <option value="2">Royal City (Hà Nội)</option>
+                                <option value="3">Sài Gòn Centre (Quận 1)</option>
+                            </select>
+                            <select id="adm-seats-room-select" onchange="app.renderAdminVisualSeatMap(this.value)" class="bg-white border border-amber-300 text-gold font-bold rounded-lg px-3 py-1.5 text-xs shadow-sm">
+                                <option value="1">Phòng 01 (IMAX Laser)</option>
+                                <option value="2">Phòng 02 (Dolby Atmos)</option>
+                                <option value="3">Phòng VIP 03 (Gold Class)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Room Info & Stats Pill -->
+                    <div class="flex flex-wrap items-center justify-between gap-3 bg-white border border-slate-200 rounded-xl p-3.5 text-xs shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <span class="text-gold font-bold" id="adm-room-title-badge">Phòng 01 (IMAX Laser)</span>
+                            <span class="text-slate-500">• Sức chứa: <b class="text-slate-900">60 ghế</b> (A1 ➔ F10)</span>
+                            <span class="text-slate-500">• Công nghệ: <b class="text-emerald-700">IMAX Laser 4K Dual</b></span>
+                        </div>
+                        <!-- Live Legend -->
+                        <div class="flex flex-wrap items-center gap-4 text-[11px] font-semibold">
+                            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-slate-100 border border-slate-300"></span> Thường (A-D)</div>
+                            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-amber-100 border border-amber-400 text-amber-900 text-[9px] font-bold text-center">V</span> VIP (E)</div>
+                            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-pink-100 border border-pink-400 text-pink-700"></span> Đôi Sweetbox (F)</div>
+                            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-red-100 border border-red-300 text-red-600"></span> Đã Đặt / Khóa</div>
+                            <div class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-slate-200 border border-dashed border-slate-400 text-slate-500"></span> Bảo Trì</div>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Surcharge Configuration Card for Admin -->
+                    <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Cấu Hình Mức Phụ Thu Loại Ghế (Dynamic Pricing)
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Admin cập nhật phụ thu cho ghế VIP và Sweetbox — Hệ thống áp dụng tức thì cho tính giá vé và sơ đồ ghế qua BigDecimal</p>
+                            </div>
+                            <form onsubmit="app.handleUpdateSeatPricing(event)" class="flex flex-wrap items-center gap-3">
+                                <div class="flex items-center gap-1.5 text-xs">
+                                    <label class="font-bold text-amber-800 bg-amber-50 px-2 py-1 rounded border border-amber-200">VIP (+₫):</label>
+                                    <input type="number" id="adm-pricing-vip" step="1000" min="0" value="20000" required class="w-28 px-2.5 py-1.5 text-xs font-bold border border-slate-200 rounded-lg focus:border-gold outline-none">
+                                </div>
+                                <div class="flex items-center gap-1.5 text-xs">
+                                    <label class="font-bold text-pink-700 bg-pink-50 px-2 py-1 rounded border border-pink-200">Sweetbox (+₫):</label>
+                                    <input type="number" id="adm-pricing-sweetbox" step="1000" min="0" value="50000" required class="w-28 px-2.5 py-1.5 text-xs font-bold border border-slate-200 rounded-lg focus:border-gold outline-none">
+                                </div>
+                                <button type="submit" id="adm-pricing-submit-btn" class="px-3.5 py-1.5 text-xs font-bold text-white bg-gold hover:bg-gold-light rounded-lg shadow-sm transition">
+                                    💾 Lưu Phụ Thu
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Visual Workspace: Left is Seat Map, Right is Inspector Card -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                        <!-- Left: Visual Cinema Map (8 cols) -->
+                        <div class="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-6 relative flex flex-col items-center shadow-sm">
+                            <!-- Curved Cinema Screen -->
+                            <div class="w-3/4 cinema-screen-curve flex items-center justify-center text-[10px] font-bold tracking-widest text-gold uppercase mb-8">
+                                MÀN HÌNH CHIẾU CHÍNH (SCREEN)
+                            </div>
+
+                            <!-- Seat Grid Container -->
+                            <div id="adm-visual-seat-grid" class="w-full max-w-xl grid grid-cols-10 gap-2 sm:gap-2.5">
+                                <!-- 60 seats injected by JS -->
+                            </div>
+
+                            <div class="mt-6 text-[11px] text-slate-500 flex items-center gap-2">
+                                <svg class="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Bấm vào bất kỳ ghế nào trên sơ đồ để kích hoạt bảng điều khiển nhanh bên phải.</span>
+                            </div>
+                        </div>
+
+                        <!-- Right: Live Seat Inspector Panel (4 cols) -->
+                        <div class="lg:col-span-4 bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-sm">
+                            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                                <h3 class="text-sm font-bold font-heading text-gold flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                    <span>BẢNG ĐIỀU KHIỂN GHẾ</span>
+                                </h3>
+                                <span id="adm-inspect-seat-code" class="px-2.5 py-0.5 rounded bg-amber-50 text-gold font-mono font-bold text-xs border border-amber-200">CHƯA CHỌN</span>
+                            </div>
+
+                            <div id="adm-inspect-empty-notice" class="py-8 text-center text-slate-500 text-xs">
+                                Chọn một vị trí ghế trên sơ đồ bên trái để xem ID và thao tác nhanh.
+                            </div>
+
+                            <div id="adm-inspect-content" class="hidden space-y-4">
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 space-y-2 text-xs">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-500">ID Ghế Hệ Thống:</span>
+                                        <span id="adm-inspect-id" class="font-mono font-bold text-slate-900 text-sm">#--</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-500">Tên Vị Trí:</span>
+                                        <span id="adm-inspect-name" class="font-bold text-gold">--</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-500">Loại Ghế:</span>
+                                        <span id="adm-inspect-type" class="font-semibold text-slate-800">--</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-500">Trạng Thái:</span>
+                                        <span id="adm-inspect-status-badge" class="px-2 py-0.5 rounded font-bold text-[10px]">--</span>
+                                    </div>
+                                </div>
+
+                                <!-- 1-Click Action Buttons -->
+                                <div class="space-y-2 pt-1">
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider">Thao Tác 1-Click (PATCH API):</label>
+                                    
+                                    <button onclick="app.quickPatchInspectedSeat('MAINTENANCE')" class="w-full py-2 px-3 rounded-lg bg-amber-50 text-amber-800 hover:bg-amber-600 hover:text-white border border-amber-300 text-xs font-semibold transition flex items-center justify-center gap-2">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+                                        <span>Đưa Vào Bảo Trì / Hỏng (MAINTENANCE)</span>
+                                    </button>
+
+                                    <button onclick="app.quickPatchInspectedSeat('HELD')" class="w-full py-2 px-3 rounded-lg bg-red-50 text-red-700 hover:bg-red-600 hover:text-white border border-red-200 text-xs font-semibold transition flex items-center justify-center gap-2">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                        <span>Khóa / Giữ Chỗ Ghế (HELD)</span>
+                                    </button>
+
+                                    <button onclick="app.quickPatchInspectedSeat('AVAILABLE')" class="w-full py-2 px-3 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 text-xs font-semibold transition flex items-center justify-center gap-2">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                        <span>Mở Lại Bán Bình Thường (AVAILABLE)</span>
+                                    </button>
+                                </div>
+
+                                <!-- Change Seat Type -->
+                                <div class="pt-2 border-t border-slate-200">
+                                    <label class="block text-[11px] font-bold text-slate-500 mb-1">Đổi Loại Ghế (Nâng cấp / Hạ cấp):</label>
+                                    <div class="flex gap-2">
+                                        <select id="adm-inspect-change-type" class="flex-1 bg-white border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                            <option value="STANDARD">STANDARD (Thường)</option>
+                                            <option value="VIP">VIP</option>
+                                            <option value="SWEETBOX">SWEETBOX (Ghế Đôi)</option>
+                                        </select>
+                                        <button onclick="app.quickChangeInspectedSeatType()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-lg text-xs font-bold transition">Lưu</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collapsible Manual PATCH Form for direct IDs -->
+                    <details class="bg-white border border-slate-200 rounded-xl p-4 text-xs shadow-sm">
+                        <summary class="font-bold text-slate-600 hover:text-gold cursor-pointer select-none">
+                            Nhập Thủ Công Theo ID Ghế (Dành cho Lập Trình Viên & Nhập Hàng Loạt)
+                        </summary>
+                        <form onsubmit="app.handlePatchSeat(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-3 border-t border-slate-100">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">ID GHẾ (SEAT ID)</label>
+                                <input type="number" id="adm-seat-id" required placeholder="Nhập ID ghế..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">TRẠNG THÁI (STATUS)</label>
+                                <select id="adm-seat-status" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                    <option value="AVAILABLE">AVAILABLE (Có thể bán)</option>
+                                    <option value="HELD">HELD (Admin giữ chỗ / Khóa ghế)</option>
+                                    <option value="MAINTENANCE">MAINTENANCE (Đang bảo trì / Hỏng)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">LOẠI GHẾ (NẾU ĐỔI)</label>
+                                <select id="adm-seat-type" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-xs text-slate-800">
+                                    <option value="">-- Giữ nguyên --</option>
+                                    <option value="STANDARD">STANDARD (Thường)</option>
+                                    <option value="VIP">VIP</option>
+                                    <option value="SWEETBOX">SWEETBOX (Ghế đôi)</option>
+                                </select>
+                            </div>
+                            <div class="sm:col-span-3">
+                                <button type="submit" class="py-2.5 px-4 bg-gold text-white font-bold rounded-lg hover:bg-gold-dark shadow-sm transition">Gửi Yêu Cầu PATCH</button>
+                            </div>
+                        </form>
+                    </details>
+                </section>
+
+                <!-- ==================== PANE 5: QUẢN LÝ VÉ & ĐẶT CHỖ ==================== -->
+                <section id="admin-pane-tickets" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Quản Lý Vé & Đặt Chỗ (Booking Service)</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Gọi trực tiếp API `GET /api/v1/tickets` để quản lý toàn bộ giao dịch mua vé trong hệ thống</p>
+                        </div>
+                        <button onclick="app.loadAllAdminTickets()" class="px-3.5 py-1.5 rounded-lg bg-white text-slate-700 hover:text-gold border border-slate-200 font-semibold text-xs transition flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            <span>Tải Lại Danh Sách</span>
+                        </button>
+                    </div>
+
+                    <!-- Summary Stats Counter Pills -->
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <button onclick="app.filterAdminTickets('ALL')" id="adm-tkt-tab-ALL" class="px-3 py-1.5 rounded-lg bg-gold text-white font-bold shadow-sm">
+                            Tất Cả Vé (<span id="adm-count-all-tickets">0</span>)
+                        </button>
+                        <button onclick="app.filterAdminTickets('PAID')" id="adm-tkt-tab-PAID" class="px-3 py-1.5 rounded-lg bg-white text-emerald-700 border border-slate-200 hover:border-emerald-500 font-semibold shadow-xs">
+                            Đã Thanh Toán (PAID) (<span id="adm-count-paid-tickets">0</span>)
+                        </button>
+                        <button onclick="app.filterAdminTickets('PENDING')" id="adm-tkt-tab-PENDING" class="px-3 py-1.5 rounded-lg bg-white text-amber-800 border border-slate-200 hover:border-amber-500 font-semibold shadow-xs">
+                            Đang Giữ Chỗ (PENDING) (<span id="adm-count-pending-tickets">0</span>)
+                        </button>
+                        <button onclick="app.filterAdminTickets('CANCELLED')" id="adm-tkt-tab-CANCELLED" class="px-3 py-1.5 rounded-lg bg-white text-red-700 border border-slate-200 hover:border-red-500 font-semibold shadow-xs">
+                            Đã Hủy (CANCELLED) (<span id="adm-count-cancelled-tickets">0</span>)
+                        </button>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="relative">
+                        <input type="text" id="adm-ticket-search" oninput="app.searchAdminTickets()" placeholder="Tìm kiếm theo Mã vé (#ID), User ID, hoặc Showtime ID..." class="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:border-gold shadow-sm">
+                        <svg class="w-4 h-4 text-slate-400 absolute right-3.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+
+                    <!-- Tickets Data Table -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto">
+                            <table class="w-full adm-table text-left">
+                                <thead>
+                                    <tr>
+                                        <th class="w-16">MÃ VÉ</th>
+                                        <th>KHÁCH HÀNG</th>
+                                        <th>SUẤT CHIẾU</th>
+                                        <th>MÃ GHẾ</th>
+                                        <th>GIÁ TIỀN</th>
+                                        <th>TRẠNG THÁI</th>
+                                        <th>THỜI GIAN ĐẶT</th>
+                                        <th class="text-right">THAO TÁC ADMIN</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adm-tickets-tbody">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== PANE 6: HỆ THỐNG & MICROSERVICES ==================== -->
+                <section id="admin-pane-system" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
+                        <div>
+                            <h2 class="text-2xl font-black font-heading text-slate-900">Giám Sát Hệ Thống & Microservices</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Kiểm tra kết nối trực tiếp đến Spring Cloud Gateway, Redis Cache và RabbitMQ</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="app.flushClientCache()" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-gold border border-slate-200 font-semibold text-xs transition flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                <span>Xóa Bộ Nhớ Cache</span>
+                            </button>
+                            <button onclick="app.exportAdminReportJson()" class="px-3.5 py-1.5 rounded-lg bg-gold text-white font-semibold text-xs hover:bg-gold-dark transition flex items-center gap-1.5 shadow-sm">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                <span>Xuất Báo Cáo JSON</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Services Table -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <table class="w-full adm-table text-left">
+                            <thead>
+                                <tr>
+                                    <th>DỊCH VỤ / TÊN CONTAINER</th>
+                                    <th>CỔNG (PORT)</th>
+                                    <th>CÔNG NGHỆ LÕI</th>
+                                    <th>TRẠNG THÁI</th>
+                                    <th>SWAGGER DOCS</th>
+                                    <th class="text-right">KIỂM TRA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold text-slate-900">API Gateway</td>
+                                    <td class="font-mono text-gold font-bold">8080</td>
+                                    <td>Spring Cloud Gateway, Reactive</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:8080" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">/api/v1</a></td>
+                                    <td class="text-right"><button onclick="app.pingService('gateway')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">User Service</td>
+                                    <td class="font-mono text-gold font-bold">8081</td>
+                                    <td>Spring Boot, Spring Security, JWT</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:8081/swagger-ui.html" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">Swagger UI</a></td>
+                                    <td class="text-right"><button onclick="app.pingService('user')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">Movie Service</td>
+                                    <td class="font-mono text-gold font-bold">8082</td>
+                                    <td>Spring Boot, Spring Data JPA, Redis</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:8082/swagger-ui.html" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">Swagger UI</a></td>
+                                    <td class="text-right"><button onclick="app.pingService('movie')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">Venue Service</td>
+                                    <td class="font-mono text-gold font-bold">8083</td>
+                                    <td>Spring Boot, MySQL, Seat Generator</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:8083/swagger-ui.html" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">Swagger UI</a></td>
+                                    <td class="text-right"><button onclick="app.pingService('venue')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">Booking Service</td>
+                                    <td class="font-mono text-gold font-bold">8084</td>
+                                    <td>Redis Lock, RabbitMQ Producer, Idempotency</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:8084/swagger-ui.html" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">Swagger UI</a></td>
+                                    <td class="text-right"><button onclick="app.pingService('booking')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">Notification Service</td>
+                                    <td class="font-mono text-gold font-bold">8085</td>
+                                    <td>RabbitMQ Consumer, Java Mail Sender</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><span class="text-slate-500 text-xs">Event Driven</span></td>
+                                    <td class="text-right"><button onclick="app.pingService('notification')" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Ping</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold text-slate-900">RabbitMQ Message Broker</td>
+                                    <td class="font-mono text-gold font-bold">5672 / 15672</td>
+                                    <td>AMQP 0-9-1 Management Portal</td>
+                                    <td><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">ONLINE</span></td>
+                                    <td><a href="http://localhost:15672" target="_blank" class="text-slate-600 hover:text-gold text-xs underline">RabbitMQ UI</a></td>
+                                    <td class="text-right"><a href="http://localhost:15672" target="_blank" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs transition">Mở UI</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- API Cheatsheet -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-sm">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Tóm Tắt REST API Dành Cho Quản Trị Viên (ADMIN)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-emerald-700 font-bold">POST /api/v1/movies</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Thêm mới bộ phim vào CSDL `movie_db`</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-blue-600 font-bold">PUT /api/v1/movies/{id}</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Cập nhật thông tin chi tiết phim</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-emerald-700 font-bold">POST /api/v1/showtimes</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Tạo suất chiếu mới (chống trùng phòng)</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-amber-800 font-bold">PATCH /api/v1/seats/{id}</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Khóa ghế hoặc đưa ghế vào bảo trì</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-purple-700 font-bold">GET /api/v1/tickets</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Lấy toàn bộ danh sách vé trong hệ thống</div>
+                            </div>
+                            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+                                <div class="text-red-700 font-bold">POST /api/v1/tickets/{id}/cancel</div>
+                                <div class="text-slate-600 text-[11px] font-sans">Hủy vé với quyền quản trị viên cao cấp</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- ==================== SUB-MODAL 1: THÊM / CHỈNH SỬA PHIM ==================== -->
+    <div id="adm-movie-modal" class="modal-overlay fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-2xl rounded-2xl shadow-2xl p-6 relative flex flex-col max-h-[92vh]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 id="adm-movie-modal-title" class="text-lg font-bold font-heading text-slate-900">Thêm Bộ Phim Mới</h3>
+                <button onclick="app.closeMovieFormModal()" class="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+            <form onsubmit="app.handleSaveMovie(event)" class="py-4 space-y-4 overflow-y-auto">
+                <input type="hidden" id="adm-edit-movie-id" value="">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">TÊN BỘ PHIM *</label>
+                        <input type="text" id="adm-form-movie-title" required placeholder="Ví dụ: AVATAR 3..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">THỂ LOẠI *</label>
+                        <input type="text" id="adm-form-movie-genre" required placeholder="Hành Động, Khoa Học Viễn Tưởng..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">NĂM PHÁT HÀNH *</label>
+                        <input type="number" id="adm-form-movie-year" value="2026" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">THỜI LƯỢNG (PHÚT) *</label>
+                        <input type="number" id="adm-form-movie-duration" value="120" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">TRẠNG THÁI CHIẾU *</label>
+                        <select id="adm-form-movie-status" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                            <option value="NOW_SHOWING">NOW_SHOWING (Đang Chiếu)</option>
+                            <option value="COMING_SOON">COMING_SOON (Sắp Chiếu)</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ĐƯỜNG DẪN ẢNH POSTER (URL)</label>
+                        <input type="url" id="adm-form-movie-poster" oninput="app.previewPoster(this.value)" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                        <div class="mt-2 flex items-center gap-3">
+                            <img id="adm-poster-preview-img" src="" alt="Preview" class="w-16 h-24 object-cover rounded-md border border-slate-200 hidden">
+                            <span id="adm-poster-preview-txt" class="text-[11px] text-slate-400">Chưa có ảnh xem trước</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ĐẠO DIỄN</label>
+                        <input type="text" id="adm-form-movie-director" placeholder="Tên đạo diễn..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">ĐỘ TUỔI / ĐỊNH DẠNG</label>
+                        <input type="text" id="adm-form-movie-age" value="C16" placeholder="C13, C16, C18..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">MÔ TẢ TÓM TẮT BỘ PHIM</label>
+                        <textarea id="adm-form-movie-desc" rows="3" placeholder="Nội dung tóm tắt..." class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold"></textarea>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex justify-end gap-3">
+                    <button type="button" onclick="app.closeMovieFormModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-semibold transition">Hủy Bỏ</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-white text-xs font-bold hover:bg-gold-dark shadow-sm transition">Lưu Thông Tin Phim</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== SUB-MODAL 2: TẠO SUẤT CHIẾU MỚI ==================== -->
+    <div id="adm-showtime-modal" class="modal-overlay fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-xl rounded-2xl shadow-2xl p-6 relative flex flex-col max-h-[92vh]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 class="text-lg font-bold font-heading text-slate-900">Tạo Suất Chiếu Mới</h3>
+                <button onclick="app.closeCreateShowtimeModal()" class="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+            <form onsubmit="app.handleCreateShowtime(event)" class="py-4 space-y-4 overflow-y-auto">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">CHỌN PHIM *</label>
+                    <select id="adm-st-movie" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold"></select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">CỤM RẠP & PHÒNG CHIẾU *</label>
+                    <select id="adm-st-room" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                        <optgroup label="Cụm Rạp 01: Landmark Grand (TP.HCM)">
+                            <option value="1">Phòng 01 (IMAX Laser)</option>
+                            <option value="2">Phòng 02 (Dolby Atmos)</option>
+                            <option value="3">Phòng VIP 03 (Gold Class)</option>
+                        </optgroup>
+                        <optgroup label="Cụm Rạp 02: Royal City (Hà Nội)">
+                            <option value="4">Phòng 01 (Starium 3D)</option>
+                            <option value="5">Phòng 02 (Dolby 7.1)</option>
+                            <option value="6">Phòng VIP 03 (Royal Lounge)</option>
+                        </optgroup>
+                        <optgroup label="Cụm Rạp 03: Sài Gòn Centre (Quận 1)">
+                            <option value="7">Phòng 01 (ScreenX 270°)</option>
+                            <option value="8">Phòng 02 (Dolby Atmos)</option>
+                            <option value="9">Phòng VIP 03 (L'amour Giường Nằm)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">NGÀY CHIẾU *</label>
+                        <input type="date" id="adm-st-date" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">GIỜ BẮT ĐẦU (HH:MM) *</label>
+                        <input type="time" id="adm-st-time" required value="19:30" class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 mb-1">GIÁ VÉ GỐC (VNĐ) *</label>
+                    <input type="number" id="adm-st-price" value="85000" step="5000" required class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-sm text-slate-900 focus:bg-white focus:border-gold">
+                    <p class="text-[11px] text-slate-500 mt-1">Ghế VIP tự động tính thêm phụ thu 15.000đ, Sweetbox phụ thu 30.000đ.</p>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex justify-end gap-3">
+                    <button type="button" onclick="app.closeCreateShowtimeModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-semibold transition">Hủy</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-gold text-white text-xs font-bold hover:bg-gold-dark shadow-sm transition">Tạo Suất Chiếu (Kiểm Tra Trùng)</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== SUB-MODAL 3: XEM CHI TIẾT VÉ ==================== -->
+    <div id="adm-ticket-modal" class="modal-overlay fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white border border-slate-200 w-full max-w-md rounded-2xl shadow-2xl p-6 relative flex flex-col">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h3 class="text-base font-bold font-heading text-slate-900">Chi Tiết Vé Điện Tử</h3>
+                <button onclick="app.closeTicketDetailModal()" class="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+            <div class="py-4 space-y-4 text-xs">
+                <!-- QR Code & Ticket Header -->
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col items-center justify-center text-center space-y-2">
+                    <div id="adm-tkt-qr" class="w-28 h-28 bg-white p-2 rounded-lg flex items-center justify-center border border-slate-200 shadow-sm">
+                        <!-- SVG Simulated QR Code -->
+                        <svg class="w-full h-full text-slate-900" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2 2h8v8H2V2zm2 2v4h4V4H4zm10-2h8v8h-8V2zm2 2v4h4V4h-4zM2 14h8v8H2v-8zm2 2v4h4v-4H4zm10 0h2v2h-2v-2zm4 0h4v2h-4v-2zm-4 4h2v4h-2v-4zm4 2h4v2h-4v-2zm-2-2h2v2h-2v-2zm4-4h2v2h-2v-2zM6 6h2v2H6V6zm10 0h2v2h-2V6zM6 18h2v2H6v-2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div id="adm-tkt-code" class="font-mono font-bold text-sm text-gold">MÃ VÉ: #--</div>
+                        <div id="adm-tkt-status-badge" class="mt-1 inline-block px-2 py-0.5 rounded text-[10px] font-extrabold">--</div>
+                    </div>
+                </div>
+
+                <div class="space-y-2 bg-slate-50 rounded-xl p-3 border border-slate-200">
+                    <div class="flex justify-between"><span class="text-slate-500">Khách Hàng (User ID):</span><span id="adm-tkt-user" class="font-mono text-slate-900 font-bold">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Bộ Phim:</span><span id="adm-tkt-movie" class="font-bold text-gold">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Suất Chiếu:</span><span id="adm-tkt-time" class="text-slate-800">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Phòng Chiếu:</span><span id="adm-tkt-room" class="text-slate-800">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Vị Trí Ghế:</span><span id="adm-tkt-seat" class="font-bold text-slate-900">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Tổng Tiền:</span><span id="adm-tkt-price" class="font-mono text-emerald-700 font-bold text-sm">--</span></div>
+                    <div class="flex justify-between"><span class="text-slate-500">Thời Gian Đặt:</span><span id="adm-tkt-created" class="text-slate-600 font-mono text-[11px]">--</span></div>
+                </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                <button onclick="app.closeTicketDetailModal()" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-semibold transition">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL 7: CHI TIẾT PHIM (MOVIE DETAIL MODAL) ==================== -->
+    <div id="movie-detail-modal" class="modal-overlay fixed inset-0 z-50 hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-white border border-slate-200 max-w-2xl w-full rounded-2xl shadow-2xl p-6 relative my-auto space-y-6">
+            <button onclick="app.closeMovieDetailModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 transition w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center">✕</button>
+            <div class="flex flex-col sm:flex-row gap-6">
+                <div class="sm:w-1/3 aspect-[2/3] rounded-xl overflow-hidden border border-slate-200 shadow-md flex-shrink-0 relative">
+                    <img id="detail-modal-poster" src="" alt="Poster" class="w-full h-full object-cover">
+                    <span id="detail-modal-age" class="absolute top-2 left-2 px-2 py-0.5 rounded text-[11px] font-extrabold bg-crimson text-white shadow"></span>
+                </div>
+                <div class="sm:w-2/3 space-y-3">
+                    <h3 id="detail-modal-title" class="text-xl sm:text-2xl font-extrabold font-heading text-slate-900"></h3>
+                    <div class="flex flex-wrap gap-2 text-xs">
+                        <span id="detail-modal-genre" class="px-2.5 py-1 rounded-md bg-amber-50 text-gold font-semibold border border-amber-200"></span>
+                        <span id="detail-modal-duration" class="px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200"></span>
+                        <span id="detail-modal-status" class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200"></span>
+                    </div>
+                    <div class="space-y-1.5 text-xs text-slate-600 pt-2 border-t border-slate-100">
+                        <p><strong class="text-slate-800">Đạo diễn:</strong> <span id="detail-modal-director"></span></p>
+                        <p><strong class="text-slate-800">Diễn viên:</strong> <span id="detail-modal-actors"></span></p>
+                        <p><strong class="text-slate-800">Khởi chiếu:</strong> <span id="detail-modal-release"></span></p>
+                    </div>
+                    <div class="pt-2">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nội dung phim:</h4>
+                        <p id="detail-modal-desc" class="text-xs text-slate-600 leading-relaxed max-h-40 overflow-y-auto pr-1"></p>
+                    </div>
+                    <div class="pt-3 flex flex-wrap gap-3">
+                        <a id="detail-modal-trailer-btn" href="#" target="_blank" class="px-4 py-2 rounded-lg bg-red-50 border border-red-200 text-red-600 hover:bg-red-600 hover:text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span>Xem Trailer</span>
+                        </a>
+                        <button id="detail-modal-book-btn" onclick="app.bookFromDetailModal()" class="px-5 py-2 rounded-lg bg-gold hover:bg-gold-dark text-white text-xs font-semibold transition flex items-center gap-1.5 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg>
+                            <span>Xem Lịch Chiếu & Đặt Vé</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TOAST CONTAINER ==================== -->
+    <div id="toast-container"></div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white border-t border-slate-200 py-12 mt-16 text-slate-500 text-sm">
+        <div class="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+            <div class="space-y-3.5">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl font-black font-heading text-gold">AURA CINEMAS</span>
+                </div>
+                <p class="leading-relaxed font-medium">Hệ thống rạp chiếu phim chuẩn quốc tế với dịch vụ đẳng cấp, công nghệ nghe nhìn đỉnh cao và thanh toán tiện lợi.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-900 text-base mb-3.5">CHÍNH SÁCH</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#" class="hover:text-gold transition font-medium">Điều khoản sử dụng</a></li>
+                    <li><a href="#" class="hover:text-gold transition font-medium">Chính sách bảo mật</a></li>
+                    <li><a href="#" class="hover:text-gold transition font-medium">Quy chế hoạt động</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-900 text-base mb-3.5">CHĂM SÓC KHÁCH HÀNG</h4>
+                <ul class="space-y-2.5 font-medium">
+                    <li>Hotline: <span class="text-gold font-bold">1900 6868</span> (8:00 - 22:00)</li>
+                    <li>Email: support@auracinemas.vn</li>
+                    <li>Giờ giữ ghế: 10 phút / giao dịch</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-slate-900 text-base mb-3.5">HỆ THỐNG KẾT NỐI</h4>
+                <p class="font-medium">API Gateway: <code class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 text-xs">http://localhost:8080</code></p>
+                <p class="mt-2 font-medium">Microservices: User (8081), Movie (8082), Venue (8083), Booking (8084)</p>
+            </div>
+        </div>
+        <div class="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 text-center border-t border-slate-100 mt-10 pt-6 text-slate-400 text-xs sm:text-sm font-medium">
+            © 2026 AURA CINEMAS VIETNAM. Bản quyền thuộc về hệ thống rạp chiếu phim AURA.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/mock-data.js?v=3.4"></script>
+    <script src="js/api.js?v=3.4"></script>
+    <script src="js/app.js?v=3.4"></script>
+</body>
+</html>

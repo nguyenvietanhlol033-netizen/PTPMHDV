@@ -1,0 +1,209 @@
+services:
+  # ==================== CƠ SỞ HẠ TẦNG ====================
+  mysql:
+    image: mysql:8
+    container_name: cinema-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    container_name: cinema-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: cinema-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: cinema
+      RABBITMQ_DEFAULT_PASS: cinema123
+    restart: unless-stopped
+
+  # ==================== MICROSERVICES ====================
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    container_name: cinema-user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      USER_DATABASE_URL: jdbc:mysql://mysql:3306/user_db?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      DB_USER: cinema
+      DB_PASSWORD: cinema123
+      DDL_AUTO: update
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: dev-only-cinema-jwt-secret-change-me-0123456789
+      BOOTSTRAP_ADMIN_ENABLED: "true"
+      BOOTSTRAP_ADMIN_USERNAME: admin
+      BOOTSTRAP_ADMIN_PASSWORD: Admin@123456
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  movie-service:
+    build:
+      context: ./movie-service
+      dockerfile: Dockerfile
+    container_name: cinema-movie-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      MOVIE_DATABASE_URL: jdbc:mysql://mysql:3306/movie_db?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      DB_USER: cinema
+      DB_PASSWORD: cinema123
+      DDL_AUTO: update
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      VENUE_SERVICE_URL: http://venue-service:8083
+      JWT_SECRET: dev-only-cinema-jwt-secret-change-me-0123456789
+      DEMO_DATA_ENABLED: "true"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      venue-service:
+        condition: service_started
+    restart: unless-stopped
+
+  venue-service:
+    build:
+      context: ./venue-service
+      dockerfile: Dockerfile
+    container_name: cinema-venue-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      VENUE_DATABASE_URL: jdbc:mysql://mysql:3306/venue_db?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      DB_USER: cinema
+      DB_PASSWORD: cinema123
+      DDL_AUTO: update
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: dev-only-cinema-jwt-secret-change-me-0123456789
+      DEMO_DATA_ENABLED: "true"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+
+  booking-service:
+    build:
+      context: ./booking-service
+      dockerfile: Dockerfile
+    container_name: cinema-booking-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      BOOKING_DATABASE_URL: jdbc:mysql://mysql:3306/booking_db?useSSL=false&serverTimezone=Asia/Ho_Chi_Minh&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+      DB_USER: cinema
+      DB_PASSWORD: cinema123
+      DDL_AUTO: update
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: cinema
+      RABBITMQ_PASSWORD: cinema123
+      MOVIE_SERVICE_URL: http://movie-service:8082
+      VENUE_SERVICE_URL: http://venue-service:8083
+      JWT_SECRET: dev-only-cinema-jwt-secret-change-me-0123456789
+      SEAT_HOLD_SECONDS: 600
+      VIP_SURCHARGE: 20000.00
+      SWEETBOX_SURCHARGE: 50000.00
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+      movie-service:
+        condition: service_started
+      venue-service:
+        condition: service_started
+    restart: unless-stopped
+
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    container_name: cinema-notification-service
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: cinema
+      RABBITMQ_PASSWORD: cinema123
+    depends_on:
+      rabbitmq:
+        condition: service_started
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: cinema-api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      USER_SERVICE_URL: http://user-service:8081
+      MOVIE_SERVICE_URL: http://movie-service:8082
+      VENUE_SERVICE_URL: http://venue-service:8083
+      BOOKING_SERVICE_URL: http://booking-service:8084
+    depends_on:
+      - user-service
+      - movie-service
+      - venue-service
+      - booking-service
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: cinema-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+volumes:
+  mysql-data:

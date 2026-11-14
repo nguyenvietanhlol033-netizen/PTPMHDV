@@ -1,0 +1,649 @@
+﻿# THÔNG TIN PHIM RẠP BETA CINEMAS (https://betacinemas.vn/phim.htm)
+Thời gian trích xuất: 06/11/2026 23:05:23
+Tổng số lượng phim: 37 phim
+- Phim đang chiếu: 13 phim
+- Phim sắp chiếu: 24 phim
+
+================================================================================
+
+### 1. Chị Chị Em Em 3
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Tâm lý, Tình cảm
+- **Thời lượng:** 122 phút
+- **Ngày khởi chiếu:** 30/10/2026
+- **Đạo diễn:** Nguyễn Hữu Hoàng
+- **Diễn viên:** Kỳ Duyên, Steven Nguyễn, Chi Pu, Quốc Anh, Ninh Dương Lan Ngọc, NSND Lê Khanh...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f08%2f400x633%2D101304%2D081026%2D10.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=0kXa2Zdu-oI
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=19456adb-79ce-40bf-aa8c-01b3e1fa797d
+- **Nội dung tóm tắt:**
+  > Giữa xã hội Bắc Bộ cũ đầy lễ giáo, Văn Tài - công tử con quan lớn quyền thế - chuẩn bị cưới Thị Mầu, tiểu thư nổi tiếng tài sắc nhất vùng. Tưởng đây là cuộc hôn nhân môn đăng hộ đối được cả làng mong chờ, nhưng trớ trêu thay Văn Tài lại say đắm Thị Liễu - người chị họ đến từ phương Nam của Thị Mầu, đang tìm đường thoát khỏi cuộc hôn nhân ngột ngạt với người chồng gia trưởng Văn Cường. Bên cạnh đó, Văn Tài còn nợ Thị Nương một mối tình chưa tròn, để rồi một cuộc tình tay năm bùng nổ, cuốn tất cả vào một cuộc chiến không ai toàn thắng - vì ở đó, tình yêu và danh dự không thể cùng tồn tại.
+
+---
+
+### 2. Godzilla Trừ Không
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Hành động
+- **Thời lượng:** 135 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Takashi Yamazaki
+- **Diễn viên:** Ryunosuke Kamiki, Minami Hamabe, Min Tanaka, Hidetaka Yoshioka
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f11%2f02%2f852x1292%2D114213%2D021126%2D52.png
+- **Link Trailer:** https://www.youtube.com/watch?v=k7MFvPQ__Ww
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=1f26f77e-41ac-47b1-a314-091af066ce8b
+- **Nội dung tóm tắt:**
+  > Chiến tranh đã đưa Nhật Bản về con số 0, Godzilla đã kéo con số ấy lao dốc xuống số âm. Đã hai năm kể từ cuộc chiến, đất nước đang đấu tranh để phục hồi và họ cuối cùng đã lấy lại được cuộc sống thường nhật. Ngay khi nhân loại cố bám giữ sự yên bình mong manh vừa giành lại được, thì một mối đe dọa mới xuất hiện, nghiền nát tất cả hy vọng. Không còn cơ hội nào nữa. Tất cả sẽ kết thúc tại đây.
+
+---
+
+### 3. Bò Sữa Bay
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Tình cảm, Hài hước
+- **Thời lượng:** 108 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Nguyễn Phạm Thành Đạt
+- **Diễn viên:** Nguyễn Hùng, Ngọc Xuân, Tiểu Vy, Võ Điền Gia Huy, Lãnh Thanh...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f02%2fteaser%2Dposter%2Dbsb%2Ddigital%2D2%2D154953%2D021026%2D89.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=inpNGLjC1dY
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=65f5b437-3bbe-4768-97b0-d20a9475d626
+- **Nội dung tóm tắt:**
+  > Lấy bối cảnh thập niên 70–80, phim xoay quanh một trang trại đang nghiên cứu công thức sữa “bí mật” có khả năng chữa lành và trẻ hóa.
+
+---
+
+### 4. Ramayana: Khởi Nguồn Một Huyền Thoại
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C13 - Cấm khán giả dưới 13 tuổi
+- **Thể loại:** Hành động, Thần thoại
+- **Thời lượng:** 168 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Nitesh Tiwari
+- **Diễn viên:** Ranbir Kapoor, Sai Pallavi, Yash, Sunny Deol, Kajal Aggarwal
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f12%2frama%2Dintl%2Donline%2D1080x1350%2Dtsr%2D04%2D114806%2D121026%2D98.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=bBFOm2HJM14
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=2a8aebc8-1ce4-4be3-951d-fa41f5db4019
+- **Nội dung tóm tắt:**
+  > Rama, hoàng tử của vương quốc Ayodhya, hiện thân của vị thần Vishnu, người vốn được chọn để kế vị nhưng phải rời cung điện và sống lưu vong 14 năm vì lời hứa của cha mình. Vợ của Rama là Sita và em trai Lakshmana cùng ông vào  rừng. Trong thời gian lưu vong, Sita bị Ravana, vị vua Dạ Xoa quyền năng siêu nhiên của Vương quốc Lanka, bắt cóc. Rama bắt đầu hành trình tìm kiếm và giải cứu nàng, trên đường kết bạn với Thần khỉ Hanuman cùng đội quân Vanara.
+
+---
+
+### 5. Thiên Đường Tăm Tối
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Tâm lý, Giật gân
+- **Thời lượng:** 100 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Yeon Sang-ho
+- **Diễn viên:** Kim Hyun-joo, Bae Hyeon-seong
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f26%2fpl%2Dmain%2Dposter%2Dsocial%2D101233%2D261026%2D64.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=VRJ9GmL8fak
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=6206a346-9519-467e-9130-f7b411735f3e
+- **Nội dung tóm tắt:**
+  > Thiên Đường Tăm Tối xoay quanh hành trình bi thương của So-young - một người mẹ bất ngờ mất đi đứa con của mình. Giữa nỗi đau tận cùng, So-young tìm thấy niềm an ủi khi kết nối với hình ảnh cậu con trai Sun-woo đã mất tích thông qua kính AR. Chín năm sau, điều tưởng như không thể xảy ra: Sun-woo thật sự trở về, nay đã là một chàng trai trưởng thành. Thế nhưng, cuộc đoàn tụ không mang đến hạnh phúc mà một lần nữa đẩy So-young vào tuyệt vọng khi người con trai trở về giờ đây xa lạ và lạnh lùng, trong khi phiên bản Sun-woo ảo lại ngày càng cần đến cô, buộc cô phải đối diện với lựa chọn đau đớn giữa thực tại và một thế giới được tạo nên từ ký ức.
+
+---
+
+### 6. Khi Thần Chết Đổ Chuông
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 86 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Jay Sukmo
+- **Diễn viên:** Bhisma Mulia, Ratu Sofya, Givina, Shaloom Razade, Mathias Muchus, Maulidan Zuhri
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f29%2fktcdc%2Dmain%2Dsocial%2D114538%2D291026%2D12.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=ddeb9SNcqNU
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=cb9e7f75-5af3-47ad-a2c3-c63273454fa8
+- **Nội dung tóm tắt:**
+  > Khi Thần Chết Đổ Chuông xoay quanh Danto (Bhisma Mulia) – người đàn ông trở về quê nhà sau nhiều năm xa cách, sau khi hay tin ông mình, pháp sư Baharun, bị sát hại bởi Panebok – linh hồn không đầu gieo rắc nỗi kinh hoàng tại vùng đất Belitung. 
+Khi chiếc chuông thiêng vốn dùng để phong ấn những linh hồn bị chiếm giữ, hàng loạt vụ giết người bí ẩn liên tiếp xảy ra. Các nạn nhân bị chặt đầu, còn truyền thuyết kinh hoàng tưởng chừng chỉ dùng để dọa trẻ con dần trở thành cơn ác mộng hiện hữu. Để ngăn chặn thảm kịch tiếp diễn, Danto buộc phải đối mặt với bí mật gia đình và tìm cách phong ấn Panebok, trước khi linh hồn không đầu này giải phóng hàng loạt linh hồn bị giam cầm bên trong chiếc chuông.
+
+---
+
+### 7. Chàng Mèo Mang Mũ
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Gia đình, Hoạt hình
+- **Thời lượng:** 107 phút
+- **Ngày khởi chiếu:** 06/11/2026
+- **Đạo diễn:** Alessandro Carloni, Erica Rivinoja
+- **Diễn viên:** Bill Hader, Xochitl Gomez, Matt Berry, Quinta Brunson, Paula Pell,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f29%2fposter%2Dchang%2Dmeo%2Dmang%2Dmu%2D1%2D110920%2D290926%2D90.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=gXdNytoxe88
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=ec012ea4-7673-4166-aceb-947e0cac21b7
+- **Nội dung tóm tắt:**
+  > Hãy gặp gỡ Chàng Mèo Mang Mũ theo cách bạn chưa từng biết đến! Tiếp nối tinh thần kỳ diệu và đầy trí tưởng tượng trong các tác phẩm của Dr. Seuss, The Cat in the Hat chính thức bước lên màn ảnh rộng với bộ phim hoạt hình điện ảnh đầu tiên của mình – một cuộc phiêu lưu hoàn toàn mới, hoành tráng và đầy cá tính, nơi những trò tinh nghịch, phép màu và hỗn loạn ngự trị. Trong phim, nhân vật chính của chúng ta phải đối mặt với nhiệm vụ khó khăn nhất từ trước đến nay cho I.I.I.I. (Viện Phụ trách Trí tưởng tượng và Cảm hứng, LLC): giúp Gabby và Sebastian, hai anh em đang chật vật thích nghi với cuộc sống ở một thị trấn mới, tìm lại niềm vui. Nổi tiếng với việc thường xuyên đẩy mọi thứ đi quá xa, đây có thể là cơ hội cuối cùng để “đặc vụ hỗn loạn” này chứng minh bản thân... hoặc đánh mất chiếc mũ phép thuật của mình!
+
+---
+
+### 8. Clayface
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Hồi Hộp, Kinh dị
+- **Thời lượng:** 109 phút
+- **Ngày khởi chiếu:** 30/10/2026
+- **Đạo diễn:** James Watkins
+- **Diễn viên:** Tom Rhys Harries, Naomi Ackie, David Dencik, Max Minghella, Eddie Marsan, Nancy Carroll, Joshua James,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f17%2fvn%2Dclay%2Dinsta%2Dvert%2Dmain%2D1638x2048%2Dintl%2D115700%2D170926%2D97.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=deaBjWyrZWo
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=dac2ab42-ed2e-450e-827b-168442cc5018
+- **Nội dung tóm tắt:**
+  > Bộ phim kinh dị đầu tiên của DC Studios, “Clayface” do đạo diễn James Watkins thực hiện, với sự tham gia của Tom Rhys Harries trong vai chính, một nhân vật phản diện của thành phố Gotham. “Clayface” hé lộ sự sa ngã kinh hoàng của một người đàn ông từ ngôi sao Hollywood đang lên trở thành một con quái vật đầy thù hận, trong một câu chuyện khám phá sự mất mát bản sắc và nhân tính, tình yêu độc hại, và mặt tối của tham vọng khoa học.
+
+---
+
+### 9. Án Mạng Karaoke
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Trinh thám, Hài hước
+- **Thời lượng:** 96 phút
+- **Ngày khởi chiếu:** 26/10/2026
+- **Đạo diễn:** Hoàng Lê
+- **Diễn viên:** Đoàn Thiên Ân, Đại Nghĩa, Vân Dung, Thanh Sơn, Quỳnh Lý, Tạ Lâm, Trịnh Thảo, Minh Tuyền, Tiểu Bảo Quốc, Phương Dung, Uy Nhân và một số diễn viên khác
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f19%2f261026%2Dan%2Dmang%2Dkaraoke%2D154426%2D191026%2D19.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=aV4qtcKmkQo
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=bd7ef3dc-73ff-4580-8b81-6279b0a86a4b
+- **Nội dung tóm tắt:**
+  > Một người hàng xóm mê hát karaoke bất ngờ bị sát hại trong căn homestay thiền biệt lập trên núi, khiến chuyến hành hương của một xóm nhỏ bị biến thành trò chơi đầu trí bất đắc dĩ.
+
+---
+
+### 10. Trại Buôn Người
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Hành động, Tâm lý
+- **Thời lượng:** 135 phút
+- **Ngày khởi chiếu:** 25/09/2026
+- **Đạo diễn:** Toni Dương Bảo Anh
+- **Diễn viên:** Steven Nguyễn, Quách Ngọc Ngoan, NSND Như Quỳnh, NSƯT Tuyết Thu, Long Điền...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f15%2fofficial%2Dposter%2Dtrai%2Dbuon%2Dnguoi%2Dfinal%2D142318%2D150926%2D62.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=TUzx32ejTlY
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=8bd33509-49af-468c-9821-6275c52da8fd
+- **Nội dung tóm tắt:**
+  > Vì cứu em gái sa bẫy buôn người ở biên giới miền Tây, Ny (Steven Nguyễn) cùng bạn thân bị bắt làm nô dịch trong sào huyệt lừa đảo tàn bạo.
+
+Tại đây, họ cùng các trinh sát nằm vùng và các nạn nhân hứng chịu bi kịch thể xác âm thầm lập kế hoạch trốn thoát.
+
+---
+
+### 11. Lên Hương
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Tâm lý, Gia đình
+- **Thời lượng:** 121 phút
+- **Ngày khởi chiếu:** 14/09/2026
+- **Đạo diễn:** Khương Ngọc và Tấn Hoàng Thông
+- **Diễn viên:** Hồng Đào, Võ Tấn Phát, NSƯT Tuyết Thu, NSND Hồng Vân, Hạ Anh, Quốc Khánh, Thiếu Lan
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f08%2f31%2flh%2Dposter%2Dpay%2Doff%2D01%2Dgreen%2Dw70xh100%2D102352%2D310826%2D82.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=gdBx_SzNO8Q
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=10b2f548-ed85-42cf-9fd8-b7fd0d33dd85
+- **Nội dung tóm tắt:**
+  > Một bà chủ của trại hòm ế ẩm và một thanh niên cần tiền trang trải cuộc sống đã vô tình mắc vào một “giao kèo định mệnh"
+Một người cố giữ nghề, một người cố cứu mạng người mẹ đang bệnh nặng, mở ra bí mật về món nợ đã chôn vùi suốt nhiều năm.
+
+---
+
+### 12. Phim Điện Ảnh Về Bộ Đôi Anh Hùng 2026: Kamen Rider ZEZTZ & Siêu Cảnh sát Vũ trụ GAVAN INFINITY
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** K - Khán giả dưới 13 tuổi có người giám hộ
+- **Thể loại:** Khoa học, viễn tưởng
+- **Thời lượng:** 96 phút
+- **Ngày khởi chiếu:** 30/10/2026
+- **Đạo diễn:** Kazuya Kamihoriuchi, Hirofumi Fukuzawa
+- **Diễn viên:** Ryutaro Imai, Maho Horiguchi, Kenta Mishima, Rina Onuki
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f15%2fkamen%2Drider%2Dzeztzandgavan%2Dlocalized%2Dmain%2Dadaptation%2Dweb%2D400%2Dx%2D633%2D113708%2D151026%2D17.png
+- **Link Trailer:** https://www.youtube.com/watch?v=IvRFf7uoIsQ
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=21fee286-0ed6-48a3-9b50-327d126ae161
+- **Nội dung tóm tắt:**
+  > Trụ sở Cảnh sát Quốc gia bị đánh bom, Yorozu Baku (Zeztz) trở thành nghi phạm số một và bị truy nã toàn quốc. Odaka Kensei (Nox) quyết tâm tìm ra kẻ đứng sau – Kamen Rider Mugen. Cùng sát cánh, Zeztz và Nox đối đầu Mugen, nhưng bị áp đảo bởi năng lực “Mộng giữa Ban ngày” có thể thao túng thực tại. Baku buộc phải đưa ra quyết định tàn khốc.
+Mặt Trời của Trái Đất Đa Nguyên A0073 bị Không Gian Ma Giới nuốt chửng, đổi lại kẻ thù yêu cầu mạng Gavan. Reiji bàng hoàng phát hiện Gavan Killer chính là Hase Makoto, tiền bối anh kính trọng. Khi Reiji rơi vào tuyệt vọng, các Gavan từ khắp đa chiều không gian đồng loạt hội tụ, mở màn trận chiến đa vũ trụ nhằm vạch trần âm mưu thực sự.
+
+---
+
+### 13. Shaun The Sheep: "Quái Lạ" Ghé Nhà
+- **Trạng thái:** PHIM ĐANG CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình
+- **Thời lượng:** 81 phút
+- **Ngày khởi chiếu:** 16/10/2026
+- **Đạo diễn:** Steve Cox, Matthew Walker
+- **Diễn viên:** Đang cập nhật
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f05%2f161026%2Dshaun%2Dthe%2Dsheep%2D152403%2D051026%2D14.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=8q6XZq8a0iA
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=2fc2c020-ab17-47bf-a957-6bcdebc5794b
+- **Nội dung tóm tắt:**
+  > SHAUN THE SHEEP: “QUÁI LẠ” GHÉ NHÀ bắt đầu với sự cố Ông chủ vô tình phá hỏng vườn bí ngô mà đàn cừu đang chuẩn bị cho Halloween. Để cứu vãn tình hình, Shaun trổ tài làm “nhà khoa học”, nhưng thí nghiệm lại kéo theo hàng loạt rắc rối ngoài dự tính. Khi Ông chủ mất tích và một sinh vật bí ẩn xuất hiện trong rừng, cả đàn cừu lên đường tìm kiếm Ông chủ và đối mặt với một chuyến phiêu lưu vừa quái vừa nhộn.
+
+---
+
+### 14. Mẹ Mìn
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Hồi hộp, Ly kì
+- **Thời lượng:** 112 phút
+- **Ngày khởi chiếu:** 27/11/2026
+- **Đạo diễn:** Jack Carry On
+- **Diễn viên:** Minh Hằng, Nhật Kim Anh, Rima Thanh Vy, Khương Lê, Đại Nghĩa, Bé Tư, Phát La
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f27%2fme%2Dmin%2Dkc%2D27%2D11%2D2026%2Dkt%2Dchuan%2D114058%2D271026%2D12.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=mTylSVV6zSo
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=93587603-bc41-47f5-bf71-4849af729c05
+- **Nội dung tóm tắt:**
+  > MẸ MÌN – một nhân vật bí ẩn – có khả năng ban phát điều ước cho mọi người, nhưng điều ước nào cũng sẽ đi kèm điều kiện của nó.
+
+---
+
+### 15. Ngày Con Còn Mẹ
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Gia đình, Tâm lý
+- **Thời lượng:** 107 phút
+- **Ngày khởi chiếu:** 11/11/2026
+- **Đạo diễn:** Vũ Ngọc Đãng
+- **Diễn viên:** Hồng Đào, Phương Anh Đào, Marando, Nguyên Thảo, Huy Anh
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f19%2f111126%2Dngay%2Dcon%2Dcon%2Dme%2D111402%2D191026%2D11.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=Z034KYinREo
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=2b45fca0-b103-4f81-9bc7-81ab4e2d534e
+- **Nội dung tóm tắt:**
+  > Có những đứa con dành cả tuổi thơ chỉ để chứng minh mình xứng đáng được yêu thương. Và cũng có những người mẹ dành cả đời để yêu con theo cách mà con chẳng thể nào hiểu nổi.
+Mây lớn lên với niềm tin sắt đá rằng trong tim bà Tím, anh Hai Pháo luôn là tất cả. Nỗi đau bị "bỏ quên" khiến cô biến mọi câu chuyện thành tranh cãi, dựng nên bức tường im lặng giữa hai mẹ con. Cho đến khi biến cố bất ngờ ập xuống, Mây mới bàng hoàng nhận ra: điều đau đớn nhất không phải là chưa từng được yêu, mà là cô đã dành trọn thanh xuân để trách một người mẹ... mà chưa từng thật sự hiểu bà.
+Khai thác góc nhìn chân thật về "đứa con thừa", NGÀY CON CÒN MẸ là hành trình dằn xé nhưng ấm áp, nhắc nhở chúng ta học cách tha thứ và yêu thương khi mọi thứ vẫn còn kịp
+
+---
+
+### 16. Bí Kíp Luyện Cướp
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Hành động, Tội Phạm
+- **Thời lượng:** 122 phút
+- **Ngày khởi chiếu:** 13/11/2026
+- **Đạo diễn:** David Leitch
+- **Diễn viên:** Nicholas Hoult, Zoe Kravitz, Anna Sawai, Rhenzy Feliz, Pete Davidson
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f12%2f131126%2Dbi%2Dkip%2Dluyen%2Dcuop%2D115741%2D121026%2D67.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=EPIRfant4y4
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=d7a8865e-45b7-4808-9790-f67101872233
+- **Nội dung tóm tắt:**
+  > Một nhóm cướp ngân hàng am hiểu mạng xã hội phát sóng những vụ cướp táo bạo của chúng, mà không hề hay biết rằng sự nổi tiếng lan truyền nhanh chóng đã đưa chúng vào tầm ngắm của một đặc vụ FBI kỳ cựu và một kỹ sư phần mềm tài ba. Mặc dù bộ đôi bất đắc dĩ này đang tiến gần, băng nhóm tội phạm vẫn vượt qua giới hạn của mình, đặt mọi thứ vào rủi ro vì niềm tin của chúng - và vụ cướp tham vọng nhất từ ​​trước đến nay.
+
+---
+
+### 17. Ebenezer Phép Màu Đêm Giáng Sinh
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Thần thoại
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 13/11/2026
+- **Đạo diễn:** Ti West
+- **Diễn viên:** Johnny Depp, Rupert Grint, Andrea Riseborough, Sam Claflin, and Ian McKellen
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f29%2f131126%2Dphep%2Dmau%2Ddem%2Dgiang%2Dsinh%2D105105%2D290926%2D49.png
+- **Link Trailer:** https://www.youtube.com/watch?v=2dITfFDPxMA
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=b114b2a4-bec7-4daa-b200-9dadc1b6d075
+- **Nội dung tóm tắt:**
+  > Tháng 11 này, Johnny Depp sẽ hóa thân thành Ebenezer Scrooge. Một cái tên quen thuộc và một câu chuyện chưa từng được kể.
+
+---
+
+### 18. Kẻ Hồi Sinh
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Hành động
+- **Thời lượng:** 101 phút
+- **Ngày khởi chiếu:** 13/11/2026
+- **Đạo diễn:** Jong-Yeol Baek
+- **Diễn viên:** Koo Kyo-hwan; Shin Seung-ho; Kang Ki-young;...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f29%2fposter%2D110730%2D291026%2D27.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=xYCXTTxsBpA
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=43b02639-3833-46ba-b727-e55dc88b46a0
+- **Nội dung tóm tắt:**
+  > Dựa trên bộ webtoon hành động đình đám, KẺ HỒI SINH (Reawakened Man) đánh dấu màn hóa thân gai góc của Koo Kyo-Hwan với những trận combat nghẹt thở.
+Chỉ cần 72 giờ, tất cả mọi thứ sẽ được thiết lặp lại. 72 giờ không chỉ là thời gian hồi sinh, nó còn là hồi chuông cảnh báo san phẳng mọi kẻ ngáng đường!!
+
+---
+
+### 19. Thòng Lọng Ma: Quỷ Cái Đòi Mạng
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 105 phút
+- **Ngày khởi chiếu:** 13/11/2026
+- **Đạo diễn:** Liêu Sĩ Hàn
+- **Diễn viên:** Wilson Hsu, Vera Chen, Travis Hu, Trần Bác Chính,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f11%2f04%2f400wx633h%2D095620%2D041126%2D59.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=n4_gVXzDiwQ
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=755270ca-2c18-4f84-9f3d-2718a3880b68
+- **Nội dung tóm tắt:**
+  > Bộ phim mở đầu bằng một nghi lễ trừ tà bị cấm được phát trực tiếp tại Indonesia, vô tình đánh thức Kuntilanak - linh hồn nữ quỷ báo thù trong truyền thuyết dân gian địa phương. Lời nguyền nhanh chóng lan đến Đài Loan, kéo theo hàng loạt cái chết bí ẩn và những vụ quỷ ám kinh hoàng. Sau khi Mila trở thành nạn nhân đầu tiên, con trai cô quyết định đưa tro cốt của mẹ trở về Indonesia để tìm hiểu sự thật đằng sau cái chết, nhưng lại bị cuốn vào cơn ác mộng bắt nguồn từ những tín ngưỡng cổ xưa và mối thù hận chưa được hóa giải. Khi thế lực siêu nhiên ngày càng trở nên đáng sợ, cả nhóm buộc phải đối mặt với Kuntilanak và tìm cách chấm dứt lời nguyền trước khi nó cướp đi tất cả
+
+---
+
+### 20. Ma Mút Con Vượt Kỷ Băng Hà
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 20/11/2026
+- **Đạo diễn:** Đang cập nhật
+- **Diễn viên:** Phi Phụng - Ngọc Tưởng - Hải Yến Idol - DatKaa - Phát Huy T4 - Hồ Tiến Đạt - Huyền Chi - Trần Vũ - Sơn Trần
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f11%2f04%2fmmc%2Dmain%2D400x633%2D105318%2D041126%2D65.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=RVS0j5tCHnM
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=eb062462-53a0-4495-8ae7-dc4bc128ef7f
+- **Nội dung tóm tắt:**
+  > Fluffy là một chú ma mút con tỉnh giấc sau giấc ngủ kéo dài hàng nghìn năm giữa vùng Nam Cực băng giá. Khi nhận ra mình đã lạc khỏi đàn, Fluffy bắt đầu hành trình tìm kiếm mẹ. Theo lời kể của những người xung quanh, mẹ cùng đàn ma mút của cậu có thể đã đến châu Phi xa xôi. Trên hành trình tìm mẹ đầy gian nan ấy, Fluffy gặp gỡ Puffin, một chú hải âu cổ rụt nhỏ mang trong mình ước mơ trở thành rapper nổi tiếng và được biểu diễn tại cuộc thi tìm kiếm tài năng Africa's Got Talent. Cùng nhau, đôi bạn bước vào chuyến phiêu lưu kỳ thú, vượt qua hàng loạt thử thách như lênh đênh trên đại dương với một tảng băng trôi, đối mặt với những con cá sấu đói bụng hay thoát khỏi bầy linh cẩu xảo quyệt. Không chỉ là hành trình tìm mẹ và chinh phục ước mơ, chuyến đi còn giúp Fluffy và Puffin hiểu hơn về tình bạn, sự quan tâm, trách nhiệm và tinh thần tương trợ lẫn nhau.
+
+---
+
+### 21. Trại Giam Hạnh Phúc
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C16 - Cấm khán giả dưới 16 tuổi
+- **Thể loại:** Hài hước, Tình cảm
+- **Thời lượng:** 127 phút
+- **Ngày khởi chiếu:** 20/11/2026
+- **Đạo diễn:** Trung Lùn
+- **Diễn viên:** Tuấn Trần, Tiến Luật, Ma Ran Đô, Lương Thế Thành, La Thành, Hoàng Phi, Khuyến Dương,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f29%2ftghp%2Dmain%2Dsocial%2D4%2D162507%2D291026%2D52.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=7Wmrhp3e3O0
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=69bff545-eef0-49d4-91f3-4821a61f7bef
+- **Nội dung tóm tắt:**
+  > Phúc (Tuấn Trần), từ một giáo viên hiền lành, tốt bụng vì muốn cứu em gái (Sally Hồng Anh) mà trở thành sát nhân, phải vào tù. Cuộc sống sau song sắt vô cùng khắc nghiệt nhưng Phúc cố gắng nhẫn nhịn, mong sớm được trở về với tự do. Nhờ bản tính lương thiện, anh khiến người cán bộ quản giáo vô cùng nguyên tắc tên Tú (Ma Ran Đô) và các phạm nhân khác dần thay đổi theo hướng tích cực, hòa hợp và đồng cảm với nhau hơn. 
+
+Trong lúc "giáo án đặc biệt nhất" đang được viết trong nhà tù thì em gái của Phúc cũng phải đối diện với một cuộc sống đầy thử thách khi không còn anh trai bên cạnh. Còn tên tù nhân sừng sỏ Long (Lương Thế Thành) cũng luôn rập rình chực chờ trả thù Phúc.
+
+---
+
+### 22. Gặp Gỡ Thông Gia: Dâu Mới Trình Làng
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hài hước
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 27/11/2026
+- **Đạo diễn:** John Hamburg
+- **Diễn viên:** Robert De Niro, Ben Stiller, Ariana Grande, Owen Wilson, Blythe Danner, Teri Polo, Skyler Gisondo, Beanie Feldstein, Eduardo Franco.
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f29%2f400x633%2D105537%2D290926%2D48.png
+- **Link Trailer:** https://www.youtube.com/watch?v=QJ_xJdSLqyk
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=ccbe929f-3dea-4203-b973-421a3547f699
+- **Nội dung tóm tắt:**
+  > Henry, con trai của Greg Focker đưa bạn gái mình, một chuyên gia đàm phán con tin của FBI về ra mắt gia đình. Mọi chuyện bắt đầu trở nên rối rắm khi Henry tiết lộ kế hoạch cầu hôn, khiến Greg không khỏi lo lắng và kéo theo hàng loạt tình huống dở khóc dở cười.
+
+---
+
+### 23. Hexed: Thế Giới Phép Thuật
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình, Phiêu lưu
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 27/11/2026
+- **Đạo diễn:** Jason Hand, Fawn Veerasunthorn, Josie Trinidad
+- **Diễn viên:** Hailee Steinfeld, Rashida Jones, Tracey Ullman, Stephen Fry
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f13%2fhexed%2D007c%2Dg%2Dvie%2Dvn%2D70x100%2D103712%2D131026%2D89.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=LtFEynKZq-I
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=21740002-1df7-4cec-8a8a-46a733115e42
+- **Nội dung tóm tắt:**
+  > Trong “Hexe – Thế giới Phép Thuật”, cô thiếu nữ bốc đồng và có phần khác biệt Billie (lồng tiếng bởi Hailee Steinfeld) bất ngờ phát hiện mình sở hữu những năng lực phép thuật bí ẩn. Khi sức mạnh ấy được giải phóng, Billie bị cuốn vào một hành trình kỳ ảo đầy choáng ngợp, rời khỏi vùng ngoại ô quen thuộc để bước chân vào Hexe – một thế giới phù thủy rộng lớn. Buộc phải đồng hành cùng người mẹ thận trọng Alice (lồng tiếng bởi Rashida Jones), hai mẹ con dần khám phá những bí mật của gia đình có thể làm thay đổi thế giới phù thủy mãi mãi
+
+---
+
+### 24. Bắt Cá Ba Tay
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Tình cảm, Hài hước
+- **Thời lượng:** 115 phút
+- **Ngày khởi chiếu:** 04/12/2026
+- **Đạo diễn:** Như Trang
+- **Diễn viên:** Thuý Ngân, Steven Nguyễn, Ngô Kiến Huy, Otis
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f29%2f041226%2Dbat%2Dca%2D3%2Dtay%2D131458%2D291026%2D46.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=AAScHmdvemE
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=d76adc31-9e51-4234-a622-73c603ce1435
+- **Nội dung tóm tắt:**
+  > Một lời cầu duyên, ba chàng trai và một đống rắc rối!
+Trong BẮT CÁ BA TAY, sau một lần cầu duyên, Yên (Thúy Ngân) bất ngờ chứng kiến cả ba người yêu cũ là Tùng (Steven Nguyễn), Phong (Ngô Kiến Huy) và Minh (Otis) đồng loạt muốn nối lại tình xưa. Đứng trước ba chàng trai với ba tính cách và ba màu sắc tình yêu khác biệt, Yên quyết định cho cả ba cơ hội cùng lúc. Nhưng khi những cuộc hẹn chồng chéo và bí mật dần có nguy cơ bị phanh phui, liệu cô nàng có thể tìm được tình yêu đích thực hay sẽ nhận về một cú "nghiệp quật" nhớ đời?
+
+---
+
+### 25. Con Mắt Thứ Ba
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 04/12/2026
+- **Đạo diễn:** Hàm Trần
+- **Diễn viên:** Đoàn Minh Anh, Quang Tuấn, Ba Tây, Loube Nguyễn, Trần Nghĩa, Cao Thùy Linh, Gia Tuệ, Ngọc Phước, Thư Nguyễn,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f02%2f041226%2Dcon%2Dmat%2Dthu%2Dba%2D160555%2D021026%2D98.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=_BHUciHkp6M
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=cc06b524-b60b-47a4-a3c8-dbb5f579d037
+- **Nội dung tóm tắt:**
+  > Một kẻ cuồng tín sau cơn đau đầu dữ dội phát hiện ra mình có một con mắt dọc trên trán. Những vụ sát nhân hàng loạt. Những hồn ma bóng quỷ lẩn khuất trong đời sống. Những nỗi sợ rình rập từ ám ảnh quá khứ. Sợi Chỉ Đỏ là gì, và sẽ kết nối tất cả như thế nào?
+
+---
+
+### 26. Đêm Hung Tàn 2
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hành động, Hài hước
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 04/12/2026
+- **Đạo diễn:** Tommy Wirkola
+- **Diễn viên:** David Harbour, Kristen Bell, Jared Harris, Joe Pantoliano, Maxwell Friedman, Daniela Melchior, Andrew Bachelor
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f16%2fvn2%2Dteaser%2D400x633%2D105300%2D161026%2D55.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=2kIluqVPtC8
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=97847250-994c-4c57-8e1b-9b967788b119
+- **Nội dung tóm tắt:**
+  > Nếu ngoan, bạn sẽ được nhận quà từ Ông Già Noel. Nếu hư, bạn sẽ nhận lấy công lý. Giờ đây, Ông Già Noel nổi loạn ấy lại một lần nữa khoác lên bộ đồ đỏ quen thuộc để đối đầu với một tên trùm tội phạm ác độc đang gieo rắc nỗi kinh hoàng cho các tiểu thương tại trung tâm thương mại Silver Bell Mall. Thế nhưng, vì lỡ quên mất ý nghĩa thực sự của Giáng Sinh, Ông Già Noel nay đã trở thành “trẻ hư”, mất hết phép thuật và bị tước đi mọi quyền năng. Tình huống tréo ngoe này đã đưa ông bước vào cuộc phiêu lưu đầy tình người bên trong trung tâm thương mại, nơi cuộc sống của những tiểu thương đang dần rơi vào tuyệt vọng và cần đến sự giúp đỡ. Trong lúc phép thuật dần cạn kiệt và thời gian cũng chẳng còn nhiều, ông buộc phải tìm một cách khác để chống lại đám côn đồ đang đe dọa nơi đây. Và để cứu lấy Giáng Sinh, Ông Già Noel phải tìm lại niềm tin bên trong mình vào lòng tốt và gọi đến sự chi viện vào phút chót từ người mà chẳng tên phản diện nào muốn đụng độ: Bà Già Noel.
+
+---
+
+### 27. Đơn Hàng Ma Ám
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** C18 - Cấm khán giả dưới 18 tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 99 phút
+- **Ngày khởi chiếu:** 11/12/2026
+- **Đạo diễn:** Dinna Jasanti
+- **Diễn viên:** Fatih Unru, Yasamin Jasem, Gabriella Ekaputri,…
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f11%2f02%2fdhm%2Dmainposter%2D400x633%2D153703%2D021126%2D92.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=l4r_Jn12UlY
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=fa428b5d-883c-4953-b954-7c4064e85649
+- **Nội dung tóm tắt:**
+  > Khi nhận hàng online trở thành án tử!
+Một nhóm sinh viên nhận được những kiện hàng bí ẩn không rõ nguồn gốc. Sự tò mò thôi thúc họ mở từng kiện hàng, nhưng cũng chính là lúc cơn ác mộng bắt đầu… Những cái chết kỳ dị liên tiếp xảy ra: thi thể bị đàn ong vây kín, tai nạn quái dị và sự mất kiểm soát tâm trí. Giữa vòng xoáy nghi kỵ, họ bàng hoàng nhận ra sự thật lạnh sống lưng: Mỗi lần nhận hàng đều có thể dẫn đến cái chết. Lời nguyền này đến từ đâu, ai là kẻ chủ mưu giật dây cho cuộc tàn sát đẫm máu? Một cuộc đua sinh tồn nghẹt thở, nơi lòng tin vỡ vụn và cái chết chực chờ sau mỗi lần mở đơn hàng online.
+
+---
+
+### 28. Dune: Hành Tinh Cát - Phần Ba
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Khoa học, viễn tưởng
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 18/12/2026
+- **Đạo diễn:** Denis Villeneuve
+- **Diễn viên:** Timothée Chalamet, Zendaya, Jason Momoa, Florence Pugh, Rebecca Ferguson, Isaach De Bankolé, Charlotte Rampling, Anya Taylor-Joy, Robert Pattinson, Javier Bardem,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f21%2fvn%2Ddune3%2Dvert%2Dmain%2D2764x4096%2Dintl%2D100547%2D211026%2D49.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=NdvqHc56lE0
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=90a5f95b-cc06-449f-a2be-897f56fee787
+- **Nội dung tóm tắt:**
+  > Dune: Hành Tinh Cát - Phần Ba lấy bối cảnh gần hai thập kỷ sau khi Paul Atreides nắm quyền kiểm soát Đế chế. Giờ đây, khi đã trở thành một Hoàng đế tàn nhẫn, Paul phải đối mặt với những hậu quả từ chính sự cai trị của mình. Những đồng minh cũ trở lại, những mỗi đe dọa mới trỗi dậy, và cả sự phản bội luôn lẩn khuất trong bóng tối. Bị ám ảnh bởi viễn cảnh Đế chế sụp đổ cùng sự trở lại của một người anh từng yêu thương, Paul bị cuốn vào một âm mưu hủy diệt - mà trung tâm của bí mật ấy lại chính là Chani. Cuộc nổi dậy dần nhen nhóm, những kẻ thù ngày một áp sát. Chính lúc này đây, Paul sẽ phải đối diện với cái giá thực sự của quyền lực, đánh đổi bằng định mệnh của những người quan trọng nhất cuộc đời anh.
+
+---
+
+### 29. Huyết Thống
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 25/12/2026
+- **Đạo diễn:** Đinh Đức Thiện
+- **Diễn viên:** Quách Ngọc Ngoan, Quang Tuấn, Lan Phương
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f09%2f17%2f400x633%2D115224%2D170926%2D51.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=T9_qgPR3h10
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=d6aa978c-044e-4fad-bc01-77d944c660be
+- **Nội dung tóm tắt:**
+  > Huyết Thống là một bản "tụng kinh hoà tấu" xoay quanh nhân vật Tâm (Quách Ngọc Ngoan) và Liêm (Quang Tuấn) trong hành trình trục vong cho một bé gái. Một người là bác sĩ đầy thành tựu tin vào sức mạnh của y học, người còn lại là thầy pháp tin vào luật nhân quả. Hai người đàn ông với hai niềm tin và phương cách khác nhau nhưng cùng chung một mục đích cứu lấy đứa trẻ vô tội. Nhưng "nợ máu trả máu", chính cái nghiệp báo không đứt đã đánh thức một oán linh cực kì nguy hiểm trở lại dương thế, mở ra một cuộc đối đầu kinh hãi trên màn ảnh.
+
+---
+
+### 30. Jumanji: Thế Giới Đảo Chiều
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Phiêu lưu, Hài hước
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 25/12/2026
+- **Đạo diễn:** Đang cập nhật
+- **Diễn viên:** Đang cập nhật
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f29%2f251226%2Djumanji%2D3%2D113500%2D291026%2D14.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=nIw1O3zvOfE
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=904310f4-64cd-4b97-a8e8-d7e5564ac901
+- **Nội dung tóm tắt:**
+  > Các anh hùng của chúng ta đã từng thoát khỏi khu rừng Jumanji luôn thay đổi trước đây, nhưng lần này trò chơi đến với chúng ta - khi Jumanji thoát khỏi máy chơi game, giải phóng sự hỗn loạn của nó vào thế giới của chúng ta.
+
+---
+
+### 31. Người Mẹ Xấu
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Tình cảm, Hành động
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 31/12/2026
+- **Đạo diễn:** Hoàng Tuấn Cường
+- **Diễn viên:** Hồng Đào, Steven Nguyễn, Doãn Quốc Đam,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f13%2f400x633%2D142750%2D131026%2D42.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=ToGzTHgj9ik
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=d780f77b-66c9-4d3f-a2a3-445ad1626c40
+- **Nội dung tóm tắt:**
+  > Nghệ sĩ Hồng Đào và Steven Nguyễn lần đầu hoá thân mẹ con trong phim Người Mẹ Xấu. Câu chuyện kể về hành trình đầy éo le và khốc liệt của hai mẹ con bị xếp vào thành phần “bất hảo” trong xã hội. Khi người con muốn hoàn lương, một ân oán của người mẹ khiến anh phải bước vào trận chiến dữ dội nhất.
+
+---
+
+### 32. Phim Angry Birds 3
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 01/01/2027
+- **Đạo diễn:** John Rice
+- **Diễn viên:** Jason Sudeikis, Josh Gad, Emma Myers, Rachel Bloom, Walker Scobell, Danny McBride, Marcello Hernández, Tim Robinson, Anna Cathcart, Maitreyi Ramakrishnan, Nikki Glaser, MrBeast, Salish Matter, Psalm West, Sam Richardson, James Austin Johnson cùng với Lily James và Keke Palmer.
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f16%2f400x633%2D105832%2D161026%2D91.png
+- **Link Trailer:** https://www.youtube.com/watch?v=a9DB_aUMzME
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=2691d3d6-feec-4e62-9fe7-e0d2f8322250
+- **Nội dung tóm tắt:**
+  > Dịp lễ này, Red sẽ phải đối đầu với thử thách nhọc nhằn nhất đời mình: vừa học cách làm cha, vừa giải cứu thế giới!
+
+---
+
+### 33. Trên Con Đường Mới
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hành động, Tình cảm
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 01/01/2027
+- **Đạo diễn:** Trần Bảo Sơn
+- **Diễn viên:** Trần Bảo Sơn và một số diễn viên khác
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f14%2ftren%2Dcon%2Dduong%2Dmoi%2Ddkkc%2D01%2D01%2D2027%2Dkt%2Dchuan%2D160254%2D141026%2D93.jpg
+- **Link Trailer:** https://www.youtube.com/shorts/OtMvWIP5uz4
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=bfbcbfc9-2324-4e20-a472-92bed2cc4c55
+- **Nội dung tóm tắt:**
+  > Trung – một người đàn ông mang theo quá khứ nhiều biến động – bước vào hành trình tìm kiếm một con đường mới giữa thế giới của tiền bạc, quyền lực, tội phạm và những ràng buộc gia đình.
+
+---
+
+### 34. Chuyến Đi Nhớ Đời
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Gia đình
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 22/01/2027
+- **Đạo diễn:** Lê Nhựt Phạm Huy
+- **Diễn viên:** Phương Nam, Bảo Nam, Kyo York, Lộ Lộ, Tạ Lâm, Uy Trần, Năm Chà, Khuyến Dương,...
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f19%2f1910%2Dteaser2%2Dof%2D145337%2D191026%2D35.png
+- **Link Trailer:** https://www.youtube.com/watch?v=CGxjGHyMXjM
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=cca33bff-4360-4dda-9c4a-960e9b305b52
+- **Nội dung tóm tắt:**
+  > Từ một chuyến đi biển định mệnh, Hoàng và cậu con trai tinh nghịch An bị cuốn vào cơn bão, mắc kẹt trên hoang đảo và buộc phải cùng nhau sinh tồn. Giữa thiên nhiên khắc nghiệt, những tình huống dở khóc dở cười, cả hai bắt đầu một hành trình không chỉ để tìm đường về nhà, mà còn để tìm lại nhau. Một người muốn về nhà, một người muốn ở lại. Liệu hành trình của họ sẽ đi về đâu?
+
+---
+
+### 35. Kỷ Băng Hà: Điểm Bùng Nổ
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình, Phiêu lưu
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 06/02/2027
+- **Đạo diễn:** John C. Donkin
+- **Diễn viên:** Denis Leary, John Leguizamo, Simon Pegg
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f16%2fteaser%2Dposter%2Dice%2Dage%2D145334%2D161026%2D33.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=3fjmjX0QOIg
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=8acd189b-5dc1-4ac1-b39d-85878b5a168d
+- **Nội dung tóm tắt:**
+  > Kỷ Băng Hà: Điểm Bùng Nổ do John Donkin (Kỷ băng hà: Cuộc phiêu lưu của Buck Wild) đạo diễn và Lori Forte (Kỷ Băng Hà & Kỷ Băng Hà: Trời Sập) đảm nhận vai trò nhà sản xuất.
+
+---
+
+### 36. Werwulf Ma Sói
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Kinh dị
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 26/02/2027
+- **Đạo diễn:** Robert Eggers
+- **Diễn viên:** Aaron Taylor-Johnson, Willem Dafoe, Lily-Rose Depp
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f16%2fwer%2Dteaser%2D400x633%2D144806%2D161026%2D90.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=CL1EFACsWag
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=7f82c448-4f74-415f-b30f-c330cb011cbc
+- **Nội dung tóm tắt:**
+  > Hãy sẵn sàng chứng kiến tác phẩm dữ dội và ám ảnh nhất từ trước đến nay của Robert Eggers. Focus Features mang đến bộ phim kinh dị mới với tên gọi WERWULF MA SÓI -  câu chuyện rùng rợn về đức tin, sự đọa đày và con quỷ ẩn sâu trong mỗi con người.
+
+---
+
+### 37. Gatto: Cuộc Phiêu Lưu Của Mèo Nero
+- **Trạng thái:** PHIM SẮP CHIẾU
+- **Phân loại độ tuổi:** P - Phổ biến cho mọi lứa tuổi
+- **Thể loại:** Hoạt hình, Phiêu lưu
+- **Thời lượng:** 120 phút
+- **Ngày khởi chiếu:** 05/03/2027
+- **Đạo diễn:** Enrico Casarosa
+- **Diễn viên:** Enrico Casarosa, Ismail Elsene, Laurence Fishburne
+- **Quốc gia:** Đang cập nhật
+- **Hình ảnh Poster:** https://files.betacorp.vn/media%2fimages%2f2026%2f10%2f16%2fseafood%2Dinstagram%2Dteaser%2Dposterg%2Dvietnam%2D145553%2D161026%2D29.jpg
+- **Link Trailer:** https://www.youtube.com/watch?v=NIKfR_uF_d0
+- **Link Chi Tiết:** https://betacinemas.vn/chi-tiet-phim.htm?gf=4a98e768-4c55-4ce3-9150-5bcb8e8845f5
+- **Nội dung tóm tắt:**
+  > Trong Gatto: Cuộc phiêu lưu của mèo Nero, sau nhiều năm tìm cách sinh tồn giữa thành phố Venice - Ý chằng chịt kênh đào và đầy rẫy những quan niệm mê tín, chú mèo Nero bắt đầu tự hỏi liệu mình đã thực sự sống đúng với những kiếp đời của mình hay chưa. Mang món nợ với Rocco, tên trùm thế giới ngầm của loài mèo tại địa phương, Nero rơi vào tình thế tiến thoái lưỡng nan. Chú buộc phải xây dựng một tình bạn không ai ngờ tới, một mối duyên có thể giúp chú cuối cùng tìm thấy mục đích thực sự của cuộc đời mình — trừ khi thành phố Venice đầy rẫy hiểm nguy kịp đánh bại chú trước khi điều đó xảy ra.
+
+---
+
