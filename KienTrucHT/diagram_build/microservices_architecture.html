@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Sơ Đồ Kiến Trúc Hệ Thống Đặt Vé Xem Phim - Microservices Architecture</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #0f172a;
+    }
+
+    @page {
+      size: A4 landscape;
+      margin: 0;
+    }
+
+    .diagram-canvas {
+      width: 1720px;
+      height: 1080px;
+      background: #ffffff;
+      border: 2px solid #94a3b8;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+      padding: 24px 32px 20px 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP HEADER */
+    .header-section {
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
+    }
+    .header-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .header-subtitle-badge {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 6px 24px;
+      background: #e0e7ff;
+      color: #3730a3;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 30px;
+    }
+
+    /* MAIN BODY GRID */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 205px 75px 235px 85px 205px 75px 1fr;
+      height: 770px;
+      position: relative;
+      z-index: 10;
+      align-items: stretch;
+    }
+
+    /* LEFT COL */
+    .left-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .client-box {
+      border: 1.5px solid #94a3b8;
+      border-radius: 14px;
+      padding: 16px 14px;
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .box-title-center {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .client-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 10px;
+      margin-bottom: 12px;
+    }
+    .client-item:last-child {
+      margin-bottom: 0;
+    }
+    .client-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .client-text-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .client-text-sub {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    /* DB Box */
+    .database-overview-box {
+      border: 1.5px solid #0284c7;
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .db-header {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .db-body {
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .db-badge-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .db-badge-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+    .db-badge-desc {
+      font-size: 11px;
+      color: #0284c7;
+    }
+
+    /* API GATEWAY */
+    .gateway-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
+    .gateway-card {
+      border: 1.5px solid #e05344;
+      border-radius: 14px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(224, 83, 68, 0.1);
+    }
+    .gateway-header {
+      background: #e05344;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 12px;
+      text-align: center;
+    }
+    .gateway-body {
+      padding: 18px 14px;
+    }
+    .gateway-icon-wrap {
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .gateway-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .gateway-list li {
+      font-size: 13px;
+      color: #334155;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.35;
+    }
+    .gateway-list li::before {
+      content: "•";
+      color: #e05344;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .gateway-port-tag {
+      margin-top: 14px;
+      text-align: center;
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #b91c1c;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    /* CENTER CONTROL PLANE */
+    .center-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .lb-card {
+      border: 1.5px solid #6b3fa0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(107, 63, 160, 0.08);
+      height: 125px;
+    }
+    .lb-header {
+      background: #6b3fa0;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 10px;
+      text-align: center;
+    }
+    .lb-body {
+      padding: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .service-reg-card {
+      border: 1.5px solid #18794e;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 90px;
+    }
+    .service-reg-header {
+      background: #18794e;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 7px;
+      text-align: center;
+    }
+    .service-reg-body {
+      padding: 8px;
+      text-align: center;
+      font-size: 11.5px;
+      color: #115e3b;
+      background: #f0fdf4;
+      line-height: 1.35;
+    }
+
+    .config-card {
+      border: 1.5px solid #ea580c;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 90px;
+    }
+    .config-header {
+      background: #ea580c;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 7px;
+      text-align: center;
+    }
+    .config-body {
+      padding: 8px;
+      text-align: center;
+      font-size: 11.5px;
+      color: #9a3412;
+      background: #fff7ed;
+      line-height: 1.35;
+    }
+
+    .broker-card {
+      border: 1.5px solid #ab4aba;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 95px;
+    }
+    .broker-header {
+      background: #ab4aba;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 7px;
+      text-align: center;
+    }
+    .broker-body {
+      padding: 8px;
+      text-align: center;
+      font-size: 11.5px;
+      color: #86198f;
+      background: #faf5ff;
+      line-height: 1.35;
+    }
+
+    /* MICROSERVICES CLUSTER */
+    .microservices-container {
+      border: 2px dashed #64748b;
+      border-radius: 16px;
+      padding: 22px 28px 14px 28px;
+      background: #ffffff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .ms-container-title {
+      position: absolute;
+      top: -14px;
+      left: 28px;
+      background: #ffffff;
+      padding: 2px 14px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      border: 1.5px solid #94a3b8;
+      border-radius: 20px;
+    }
+    .ms-container-title span {
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .deployed-badge-pill {
+      position: absolute;
+      top: -14px;
+      right: 28px;
+      background: #f0f9ff;
+      color: #0369a1;
+      border: 1.5px solid #7dd3fc;
+      border-radius: 20px;
+      padding: 2px 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .services-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .service-row-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .svc-user { border-left: 6px solid #2375d8; }
+    .svc-movie { border-left: 6px solid #289643; }
+    .svc-venue { border-left: 6px solid #d87a1e; }
+    .svc-booking { border-left: 6px solid #d63939; }
+    .svc-notify { border-left: 6px solid #8e37bf; }
+
+    .svc-info-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .svc-cube-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .svc-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .svc-tech {
+      font-size: 11.5px;
+      color: #64748b;
+    }
+    .svc-tags {
+      display: flex;
+      gap: 8px;
+    }
+    .svc-tag-chip {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 11px;
+      padding: 3px 8px;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    /* DB per service section */
+    .db-per-service-section {
+      margin-top: 10px;
+      padding-top: 12px;
+      border-top: 1.5px dashed #cbd5e1;
+    }
+    .db-per-service-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #475569;
+      text-align: center;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .db-cylinders-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .db-cylinder-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .db-cyl-icon {
+      width: 44px;
+      height: 46px;
+    }
+    .db-cyl-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f172a;
+      text-align: center;
+    }
+    .db-cyl-sub {
+      font-size: 10px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* BOTTOM ROW: DEVOPS & MONITORING */
+    .bottom-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tools-box {
+      border: 1.5px dashed #ea580c;
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: #ffffff;
+      position: relative;
+    }
+    .tools-badge {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #fed7aa;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 12px;
+    }
+    .tools-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 2px;
+    }
+    .tool-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-item-icon {
+      width: 26px;
+      height: 26px;
+    }
+    .tool-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .tool-desc {
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    .monitor-box {
+      border: 1.5px dashed #6b3fa0;
+      border-radius: 12px;
+      padding: 10px 20px;
+      background: #ffffff;
+      position: relative;
+    }
+    .monitor-badge {
+      position: absolute;
+      top: -12px;
+      left: 20px;
+      background: #1e1b4b;
+      color: #ffffff;
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 2px 16px;
+      border-radius: 12px;
+    }
+    .monitor-items {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    /* SVG CONNECTOR OVERLAY */
+    #connector-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1720px;
+      height: 1080px;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="diagram-canvas" id="canvas-root">
+
+    <!-- TOP TITLE HEADER -->
+    <div class="header-section">
+      <div class="header-title">Microservices Architecture</div>
+      <div class="header-subtitle-badge">
+        A modern approach to build scalable &amp; flexible applications • Hệ Thống Đặt Vé Xem Phim
+      </div>
+    </div>
+
+    <!-- MAIN BODY GRID -->
+    <div class="main-grid">
+
+      <!-- COL 1: CLIENT & DATABASE -->
+      <div class="left-col">
+        <!-- Client Box -->
+        <div class="client-box" id="node-client">
+          <div class="box-title-center">Client</div>
+
+          <div class="client-item" id="node-client-web">
+            <div class="client-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2375d8" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <line x1="2" y1="8" x2="22" y2="8"/>
+                <circle cx="5" cy="5.5" r="1" fill="#2375d8"/>
+                <circle cx="8" cy="5.5" r="1" fill="#2375d8"/>
+                <circle cx="11" cy="5.5" r="1" fill="#2375d8"/>
+                <path d="M8 21h8"/>
+                <path d="M12 17v4"/>
+              </svg>
+            </div>
+            <div>
+              <div class="client-text-title">Web Browser</div>
+              <div class="client-text-sub">HTML5, JS, Bootstrap (Port 3000)</div>
+            </div>
+          </div>
+
+          <div class="client-item" id="node-client-mobile">
+            <div class="client-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="3" ry="3"/>
+                <line x1="11" y1="18" x2="13" y2="18"/>
+                <circle cx="12" cy="5" r="0.8" fill="#0284c7"/>
+              </svg>
+            </div>
+            <div>
+              <div class="client-text-title">Mobile App</div>
+              <div class="client-text-sub">Mobile Client / Browser</div>
+            </div>
+          </div>
+
+          <div class="client-item" id="node-client-3rd">
+            <div class="client-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                <circle cx="12" cy="13" r="2.5"/>
+              </svg>
+            </div>
+            <div>
+              <div class="client-text-title">3rd Party</div>
+              <div class="client-text-sub">VietQR, SMTP Mail Service</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Database Box -->
+        <div class="database-overview-box" id="node-database-box">
+          <div class="db-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+            Database
+          </div>
+          <div class="db-body">
+            <div class="db-badge-item">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0369a1" stroke-width="2">
+                <ellipse cx="12" cy="6" rx="8" ry="3"/>
+                <path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/>
+                <path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>
+              </svg>
+              <div>
+                <div class="db-badge-name">MySQL 8.0</div>
+                <div class="db-badge-desc">Port 3307 - Per-Service DBs</div>
+              </div>
+            </div>
+
+            <div class="db-badge-item" style="background:#fef2f2; border-color:#fecaca;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"/>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"/>
+                <line x1="6" y1="6" x2="6.01" y2="6"/>
+                <line x1="6" y1="18" x2="6.01" y2="18"/>
+              </svg>
+              <div>
+                <div class="db-badge-name" style="color:#b91c1c;">Redis 7.2</div>
+                <div class="db-badge-desc" style="color:#991b1b;">Port 6379 - Distributed Lock</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAP 1 -->
+      <div></div>
+
+      <!-- COL 2: API GATEWAY -->
+      <div class="gateway-wrapper">
+        <div class="gateway-card" id="node-gateway">
+          <div class="gateway-header">API Gateway</div>
+          <div class="gateway-body">
+            <div class="gateway-icon-wrap">
+              <svg width="56" height="50" viewBox="0 0 24 24" fill="none" stroke="#e05344" stroke-width="1.8">
+                <rect x="2" y="2" width="20" height="6" rx="2"/>
+                <rect x="2" y="9" width="20" height="6" rx="2"/>
+                <rect x="2" y="16" width="20" height="6" rx="2"/>
+                <circle cx="6" cy="5" r="1" fill="#e05344"/>
+                <circle cx="6" cy="12" r="1" fill="#e05344"/>
+                <circle cx="6" cy="19" r="1" fill="#e05344"/>
+                <line x1="12" y1="5" x2="18" y2="5"/>
+                <line x1="12" y1="12" x2="18" y2="12"/>
+                <line x1="12" y1="19" x2="18" y2="19"/>
+              </svg>
+            </div>
+            <ul class="gateway-list">
+              <li><strong>Single Entry Point</strong></li>
+              <li><strong>Routing</strong></li>
+              <li><strong>Authentication</strong></li>
+              <li><strong>CORS &amp; Rate Limiting</strong></li>
+            </ul>
+            <div class="gateway-port-tag">
+              Spring Cloud Gateway (:8080)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAP 2 -->
+      <div></div>
+
+      <!-- COL 3: LOAD BALANCER & CONTROL PLANE -->
+      <div class="center-col">
+        <!-- Load Balancer -->
+        <div class="lb-card" id="node-loadbalancer">
+          <div class="lb-header">Load Balancer</div>
+          <div class="lb-body">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#6b3fa0" stroke-width="2" style="margin-bottom:2px;">
+              <path d="M16 3h5v5"/>
+              <path d="M4 20L21 3"/>
+              <path d="M21 16v5h-5"/>
+              <path d="M15 15l6 6"/>
+              <path d="M4 4l5 5"/>
+            </svg>
+            <div style="font-weight:700;">• Distributes Traffic</div>
+            <div style="font-size:11px; color:#6b7280; margin-top:2px;">(Internal Dispatcher)</div>
+          </div>
+        </div>
+
+        <!-- Service Registry -->
+        <div class="service-reg-card" id="node-registry">
+          <div class="service-reg-header">Service Registry</div>
+          <div class="service-reg-body">
+            <strong>(Docker DNS / Eureka)</strong><br>
+            Service Discovery &amp; Health
+          </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="config-card" id="node-config">
+          <div class="config-header">Configuration</div>
+          <div class="config-body">
+            <strong>(Spring Cloud Config)</strong><br>
+            `application.yml` Centralized
+          </div>
+        </div>
+
+        <!-- Message Broker -->
+        <div class="broker-card" id="node-broker">
+          <div class="broker-header">Message Broker</div>
+          <div class="broker-body">
+            <strong>(RabbitMQ 3.13)</strong><br>
+            `TICKET_PAID`, `BOOKING_CREATED`
+          </div>
+        </div>
+      </div>
+
+      <!-- GAP 3 -->
+      <div></div>
+
+      <!-- COL 4: MICROSERVICES CONTAINER -->
+      <div class="microservices-container" id="node-ms-container">
+        <div class="ms-container-title">
+          Microservices <span>(Independent Services)</span>
+        </div>
+        <div class="deployed-badge-pill">
+          🐳 Deployed Independently (Docker Containers)
+        </div>
+
+        <div class="services-stack">
+          <!-- 1. User Service -->
+          <div class="service-row-card svc-user" id="node-svc-user">
+            <div class="svc-info-left">
+              <svg class="svc-cube-icon" viewBox="0 0 24 24" fill="none" stroke="#2375d8" stroke-width="2">
+                <path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/>
+                <path d="m3.27 6.96 8.73 4.88 8.73-4.88"/>
+                <path d="M12 22V12"/>
+              </svg>
+              <div>
+                <div class="svc-name">User Service</div>
+                <div class="svc-tech">(Java/Spring Boot) • Port :8081</div>
+              </div>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag-chip">Auth / JWT</span>
+              <span class="svc-tag-chip">User Management</span>
+            </div>
+          </div>
+
+          <!-- 2. Movie Service -->
+          <div class="service-row-card svc-movie" id="node-svc-movie">
+            <div class="svc-info-left">
+              <svg class="svc-cube-icon" viewBox="0 0 24 24" fill="none" stroke="#289643" stroke-width="2">
+                <path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/>
+                <path d="m3.27 6.96 8.73 4.88 8.73-4.88"/>
+                <path d="M12 22V12"/>
+              </svg>
+              <div>
+                <div class="svc-name">Movie Service</div>
+                <div class="svc-tech">(Java/Spring Boot) • Port :8082</div>
+              </div>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag-chip">Movie Catalog</span>
+              <span class="svc-tag-chip">Genres &amp; Posters</span>
+            </div>
+          </div>
+
+          <!-- 3. Venue Service -->
+          <div class="service-row-card svc-venue" id="node-svc-venue">
+            <div class="svc-info-left">
+              <svg class="svc-cube-icon" viewBox="0 0 24 24" fill="none" stroke="#d87a1e" stroke-width="2">
+                <path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/>
+                <path d="m3.27 6.96 8.73 4.88 8.73-4.88"/>
+                <path d="M12 22V12"/>
+              </svg>
+              <div>
+                <div class="svc-name">Venue Service</div>
+                <div class="svc-tech">(Java/Spring Boot) • Port :8083</div>
+              </div>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag-chip">Cinemas &amp; Rooms</span>
+              <span class="svc-tag-chip">Seats &amp; Showtimes</span>
+            </div>
+          </div>
+
+          <!-- 4. Booking & Payment Service -->
+          <div class="service-row-card svc-booking" id="node-svc-booking">
+            <div class="svc-info-left">
+              <svg class="svc-cube-icon" viewBox="0 0 24 24" fill="none" stroke="#d63939" stroke-width="2">
+                <path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/>
+                <path d="m3.27 6.96 8.73 4.88 8.73-4.88"/>
+                <path d="M12 22V12"/>
+              </svg>
+              <div>
+                <div class="svc-name">Booking &amp; Payment Service</div>
+                <div class="svc-tech">(Java/Spring Boot) • Port :8084</div>
+              </div>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag-chip" style="background:#fee2e2; color:#b91c1c; border-color:#fca5a5;">Redis Lua Lock (10m)</span>
+              <span class="svc-tag-chip">VietQR &amp; Mock Pay</span>
+            </div>
+          </div>
+
+          <!-- 5. Notification Service -->
+          <div class="service-row-card svc-notify" id="node-svc-notify">
+            <div class="svc-info-left">
+              <svg class="svc-cube-icon" viewBox="0 0 24 24" fill="none" stroke="#8e37bf" stroke-width="2">
+                <path d="m21 16-9 5-9-5V8l9-5 9 5v8Z"/>
+                <path d="m3.27 6.96 8.73 4.88 8.73-4.88"/>
+                <path d="M12 22V12"/>
+              </svg>
+              <div>
+                <div class="svc-name">Notification Service</div>
+                <div class="svc-tech">(Java/Spring Boot) • Port :8085</div>
+              </div>
+            </div>
+            <div class="svc-tags">
+              <span class="svc-tag-chip">RabbitMQ Consumer</span>
+              <span class="svc-tag-chip">Email Confirmation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATABASE PER SERVICE SECTION -->
+        <div class="db-per-service-section">
+          <div class="db-per-service-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+            Each Service has its own Database (Database-per-Service Pattern)
+          </div>
+
+          <div class="db-cylinders-row">
+            <!-- User DB -->
+            <div class="db-cylinder-item" id="node-db-user">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#eff6ff" stroke="#2375d8" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#bfdbfe" stroke="#2375d8" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#2375d8" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#2375d8" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label">User DB</div>
+              <div class="db-cyl-sub">user_db</div>
+            </div>
+
+            <!-- Movie DB -->
+            <div class="db-cylinder-item" id="node-db-movie">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#f0fdf4" stroke="#289643" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#bbf7d0" stroke="#289643" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#289643" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#289643" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label">Movie DB</div>
+              <div class="db-cyl-sub">movie_db</div>
+            </div>
+
+            <!-- Venue DB -->
+            <div class="db-cylinder-item" id="node-db-venue">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#fffbeb" stroke="#d87a1e" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#fde68a" stroke="#d87a1e" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#d87a1e" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#d87a1e" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label">Venue DB</div>
+              <div class="db-cyl-sub">venue_db</div>
+            </div>
+
+            <!-- Booking DB -->
+            <div class="db-cylinder-item" id="node-db-booking">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#fef2f2" stroke="#d63939" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#fecaca" stroke="#d63939" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#d63939" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#d63939" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label">Booking DB</div>
+              <div class="db-cyl-sub">booking_db</div>
+            </div>
+
+            <!-- Redis Cache -->
+            <div class="db-cylinder-item" id="node-db-redis">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#fff1f2" stroke="#e11d48" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#fecdd3" stroke="#e11d48" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#e11d48" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#e11d48" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label" style="color:#e11d48;">Redis Cache</div>
+              <div class="db-cyl-sub">Distributed Lock</div>
+            </div>
+
+            <!-- Notification DB -->
+            <div class="db-cylinder-item" id="node-db-notify">
+              <svg class="db-cyl-icon" viewBox="0 0 40 44" fill="none">
+                <path d="M5 10 C5 5, 35 5, 35 10 L35 34 C35 39, 5 34, 5 34 Z" fill="#faf5ff" stroke="#8e37bf" stroke-width="2"/>
+                <ellipse cx="20" cy="10" rx="15" ry="5" fill="#e9d5ff" stroke="#8e37bf" stroke-width="2"/>
+                <path d="M5 18 C5 23, 35 23, 35 18" stroke="#8e37bf" stroke-width="2"/>
+                <path d="M5 26 C5 31, 35 31, 35 26" stroke="#8e37bf" stroke-width="2"/>
+              </svg>
+              <div class="db-cyl-label">Notify DB</div>
+              <div class="db-cyl-sub">notification_db</div>
+            </div>
+
+            <!-- Docker whale badge -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin-left:14px;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="#0284c7">
+                <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185zm0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186zm-2.954 0h2.119a.186.186 0 00.186-.186V6.29a.186.186 0 00-.186-.185H8.075a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm5.908 2.714h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm-8.862 0h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186H5.121a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm-2.954 0h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186H2.167a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186zm5.908 0h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm10.998-1.55c-.37-.24-1.077-.333-1.748-.24-.105-.724-.51-1.393-1.082-1.85-.24-.19-.512-.338-.804-.442l-.21-.067c-.206-.056-.423-.086-.645-.086H12.72v-.002H1.981C.887 6.88 0 7.767 0 8.862v5.33c0 2.76 2.24 5 5 5 2.11 0 3.91-1.31 4.63-3.17 1.45.1 3.12-.22 4.49-1.05 1.54.91 3.4 1.13 5.09.61 1.7-.52 2.92-1.93 3.17-3.66.08-.55.03-1.07-.15-1.53z"/>
+              </svg>
+              <span style="font-size:11px; font-weight:800; color:#0284c7;">docker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM ROW: DEVOPS & TOOLS + MONITORING -->
+    <div class="bottom-section">
+      <!-- DevOps & Tools -->
+      <div class="tools-box">
+        <div class="tools-badge">DevOps &amp; Tools</div>
+        <div class="tools-items">
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="#f05032">
+              <path d="m23.546 10.93-9.475-9.475a3.172 3.172 0 0 0-4.485 0L7.54 3.5a3.18 3.18 0 0 0 0 4.485l2.046 2.046-5.112 5.112a3.17 3.17 0 0 0 0 4.485l9.475 9.475a3.172 3.172 0 0 0 4.485 0l9.112-9.112a3.17 3.17 0 0 0 0-4.485"/>
+            </svg>
+            <div>
+              <div class="tool-name">Git</div>
+              <div class="tool-desc">Version Control</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="#0284c7">
+              <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185zm-5.908 5.43h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186H5.121a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm10.998-1.55c-.37-.24-1.077-.333-1.748-.24-.105-.724-.51-1.393-1.082-1.85-.24-.19-.512-.338-.804-.442l-.21-.067c-.206-.056-.423-.086-.645-.086H12.72v-.002H1.981C.887 6.88 0 7.767 0 8.862v5.33c0 2.76 2.24 5 5 5 2.11 0 3.91-1.31 4.63-3.17 1.45.1 3.12-.22 4.49-1.05 1.54.91 3.4 1.13 5.09.61 1.7-.52 2.92-1.93 3.17-3.66.08-.55.03-1.07-.15-1.53z"/>
+            </svg>
+            <div>
+              <div class="tool-name">Docker</div>
+              <div class="tool-desc">Containerization</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="#326ce5">
+              <path d="M12 2 3.5 7v10L12 22l8.5-5V7L12 2Zm0 3.2 5.5 3.2v6.4L12 18l-5.5-3.2v-6.4L12 5.2Z"/>
+            </svg>
+            <div>
+              <div class="tool-name">Docker Compose</div>
+              <div class="tool-desc">Multi-Service Stack</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="#c71a36">
+              <path d="M12 2 2 7l10 5 10-5-10-5ZM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <div>
+              <div class="tool-name">Maven</div>
+              <div class="tool-desc">Build Automation</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="#ff6c37">
+              <circle cx="12" cy="12" r="10" stroke="#ff6c37" stroke-width="2" fill="none"/>
+              <path d="M7 12h10M13 8l4 4-4 4"/>
+            </svg>
+            <div>
+              <div class="tool-name">Postman</div>
+              <div class="tool-desc">Integration Tests</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monitoring & Operations -->
+      <div class="monitor-box">
+        <div class="monitor-badge">Monitoring</div>
+        <div class="monitor-items">
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="#e6522c" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/>
+            </svg>
+            <div>
+              <div class="tool-name">Spring Actuator</div>
+              <div class="tool-desc">Health Check &amp; Metrics</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="#f46800" stroke-width="2">
+              <path d="M3 3v18h18"/>
+              <path d="m19 9-5 5-4-4-3 3"/>
+            </svg>
+            <div>
+              <div class="tool-name">Centralized Logs</div>
+              <div class="tool-desc">Docker Log Stream</div>
+            </div>
+          </div>
+
+          <div class="tool-item">
+            <svg class="tool-item-icon" viewBox="0 0 24 24" fill="none" stroke="#00bfb3" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+            <div>
+              <div class="tool-name">Circuit Breaker</div>
+              <div class="tool-desc">Resilience Fallback</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRE-COMPUTED PIXEL-PERFECT SVG CONNECTORS -->
+    <svg id="connector-canvas" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Arrowhead Marker Dark Gray -->
+        <marker id="arrow-dark" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b" />
+        </marker>
+        <!-- Arrowhead Marker Purple -->
+        <marker id="arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#6b3fa0" />
+        </marker>
+        <!-- Arrowhead Marker Teal -->
+        <marker id="arrow-teal" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#18794e" />
+        </marker>
+        <!-- Arrowhead Marker Orange -->
+        <marker id="arrow-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ea580c" />
+        </marker>
+        <!-- Arrowhead Marker Magenta -->
+        <marker id="arrow-magenta" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ab4aba" />
+        </marker>
+        <!-- Arrowhead Marker Blue -->
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7" />
+        </marker>
+      </defs>
+
+      <!-- 1. Client items to API Gateway -->
+      <!-- From Web Browser (X=237, Y=222) -> Gateway (X=335, Y=445) -->
+      <path d="M 237 222 C 285 222, 285 445, 330 445" fill="none" stroke="#1e293b" stroke-width="2.2" marker-end="url(#arrow-dark)" />
+      <!-- From Mobile App (X=237, Y=294) -> Gateway (X=335, Y=485) -->
+      <path d="M 237 294 C 285 294, 285 485, 330 485" fill="none" stroke="#1e293b" stroke-width="2.2" marker-end="url(#arrow-dark)" />
+      <!-- From 3rd Party (X=237, Y=366) -> Gateway (X=335, Y=525) -->
+      <path d="M 237 366 C 285 366, 285 525, 330 525" fill="none" stroke="#1e293b" stroke-width="2.2" marker-end="url(#arrow-dark)" />
+
+      <!-- 2. Gateway to Load Balancer -->
+      <!-- Gateway (X=570, Y=485) to Load Balancer (X=650, Y=205) -->
+      <path d="M 570 485 H 610 V 205 H 645" fill="none" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow-dark)" />
+
+      <!-- 3. Load Balancer to Microservices Cluster -->
+      <!-- LB (X=855, Y=205) -> Trunk line to X=885 -> Vert backbone -> branches -->
+      <path d="M 855 205 H 885" fill="none" stroke="#6b3fa0" stroke-width="2.5" />
+      <path d="M 885 198 V 442" fill="none" stroke="#6b3fa0" stroke-width="2.2" />
+      
+      <!-- Branch to User Service (Y=198) -->
+      <path d="M 885 198 H 925" fill="none" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#arrow-purple)" />
+      <!-- Branch to Movie Service (Y=259) -->
+      <path d="M 885 259 H 925" fill="none" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#arrow-purple)" />
+      <!-- Branch to Venue Service (Y=320) -->
+      <path d="M 885 320 H 925" fill="none" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#arrow-purple)" />
+      <!-- Branch to Booking Service (Y=381) -->
+      <path d="M 885 381 H 925" fill="none" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#arrow-purple)" />
+      <!-- Branch to Notification Service (Y=442) -->
+      <path d="M 885 442 H 925" fill="none" stroke="#6b3fa0" stroke-width="2.2" marker-end="url(#arrow-purple)" />
+
+      <!-- 4. Service Registry <-> Microservices (Dashed Teal Line) -->
+      <path d="M 855 348 H 925" fill="none" stroke="#18794e" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-teal)" />
+      
+      <!-- 5. Configuration <-> Microservices (Dashed Orange Line) -->
+      <path d="M 855 470 H 925" fill="none" stroke="#ea580c" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)" />
+
+      <!-- 6. Message Broker <-> Microservices & Notification (Dashed Magenta Line) -->
+      <!-- Message Broker to Notification Service -->
+      <path d="M 855 595 H 900 V 455 H 925" fill="none" stroke="#ab4aba" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arrow-magenta)" />
+
+      <!-- 7. Gateway / Booking to Redis & Database Overview (Dashed Blue Line) -->
+      <path d="M 452 626 V 735 H 241" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-blue)" />
+    </svg>
+
+  </div>
+
+</body>
+</html>

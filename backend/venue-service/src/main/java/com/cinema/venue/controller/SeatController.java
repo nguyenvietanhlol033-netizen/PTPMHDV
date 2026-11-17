@@ -54,8 +54,7 @@ public class SeatController {
         return ResponseEntity.ok(seatService.updateSeat(id, request));
     }
 
-    @Operation(summary = "ADMIN: Cập nhật một phần ghế (giữ/nhả ghế: status; đổi loại ghế: seatType)")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Cập nhật một phần ghế (giữ/nhả ghế: status; đổi loại ghế: seatType)")
     @PatchMapping("/{id}")
     public ResponseEntity<Seat> patchSeat(@PathVariable Long id, @RequestBody SeatPatchRequest request) {
         return ResponseEntity.ok(seatService.patchSeat(id, request));

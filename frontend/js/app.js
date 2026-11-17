@@ -1037,6 +1037,15 @@ class CinemaApp {
                 }
             }
 
+            // Đồng bộ trạng thái ghế sang venue-service để Admin nhìn thấy ghế chuyển sang HELD (Đã khóa) ngay
+            if (api.isBackendOnline) {
+                try {
+                    await Promise.allSettled(list.map(s => api.patchSeat(s.id, { status: 'HELD' })));
+                } catch (e) {
+                    console.warn('Lỗi đồng bộ patchSeat sang HELD:', e);
+                }
+            }
+
             const seatNames = list.map(s => s.seatName).join(', ');
             this.showToast(`🎉 Giữ thành công ${tickets.length} ghế [${seatNames}]! Vui lòng thanh toán trong 10 phút.`, 'success');
             
@@ -1064,7 +1073,7 @@ class CinemaApp {
     }
 
     // ==================== MÀN HÌNH THANH TOÁN (CHECKOUT & PAYMENT) ====================
-    openCheckoutModal(ticket, allTickets = null) {
+    async openCheckoutModal(ticket, allTickets = null) {
         const modal = document.getElementById('checkout-modal');
         const tickets = (allTickets && allTickets.length > 0) ? allTickets : [ticket];
         this.currentTickets = tickets;
@@ -1086,10 +1095,48 @@ class CinemaApp {
         const totalAmount = tickets.reduce((sum, t) => sum + (t.finalPrice || 0), 0);
         document.getElementById('checkout-final-price').textContent = this.formatVND(totalAmount);
 
+        // Khởi tạo phương thức thanh toán
+        this.selectedPaymentMethod = 'VIETQR';
+        this.selectPaymentMethod('VIETQR');
+
+        // Khởi tạo giao dịch thanh toán backend & hiển thị mã QR VietQR động
+        this.currentPayment = null;
+        const qrImg = document.getElementById('checkout-qr-img');
+        const memoEl = document.getElementById('checkout-qr-memo');
+        const defaultCode = `PAY${Date.now()}`;
+        if (memoEl) memoEl.textContent = defaultCode;
+        if (qrImg) qrImg.src = `https://img.vietqr.io/image/970422-0987654321-compact2.png?amount=${Math.round(totalAmount)}&addInfo=${defaultCode}&accountName=AURA%20CINEMA`;
+
+        if (api.isBackendOnline) {
+            try {
+                const numericTicketIds = tickets.map(t => t.id);
+                const paymentRes = await api.createPayment(numericTicketIds, 'VIETQR');
+                this.currentPayment = paymentRes;
+                if (paymentRes.transactionCode && memoEl) memoEl.textContent = paymentRes.transactionCode;
+                if (paymentRes.qrUrl && qrImg) qrImg.src = paymentRes.qrUrl;
+                document.getElementById('checkout-ticket-id').textContent = `${ticketIds} | ${paymentRes.transactionCode}`;
+            } catch (err) {
+                console.warn('Khởi tạo giao dịch thanh toán backend:', err);
+            }
+        }
+
         modal.classList.remove('hidden');
 
         // Bắt đầu đếm ngược 10 phút giữ ghế
         this.startHoldCountdown(600);
+    }
+
+    selectPaymentMethod(method) {
+        this.selectedPaymentMethod = method;
+        const qrBox = document.getElementById('checkout-vietqr-box');
+        const mockBox = document.getElementById('checkout-mock-box');
+        if (method === 'VIETQR') {
+            if (qrBox) qrBox.classList.remove('hidden');
+            if (mockBox) mockBox.classList.add('hidden');
+        } else {
+            if (qrBox) qrBox.classList.add('hidden');
+            if (mockBox) mockBox.classList.remove('hidden');
+        }
     }
 
     closeCheckoutModal() {
@@ -1129,12 +1176,32 @@ class CinemaApp {
         try {
             const ticketsToPay = (this.currentTickets && this.currentTickets.length > 0) 
                 ? this.currentTickets : [this.currentTicket];
+            const numericTicketIds = ticketsToPay.map(t => t.id);
             let paidTickets = [];
 
             if (api.isBackendOnline) {
-                paidTickets = await Promise.all(ticketsToPay.map(t => api.payTicket(t.id)));
+                if (this.currentPayment && this.currentPayment.id) {
+                    const payRes = await api.mockPay(this.currentPayment.id);
+                    paidTickets = payRes.tickets || ticketsToPay.map(t => ({ ...t, status: 'PAID' }));
+                } else {
+                    try {
+                        paidTickets = await api.payTicketsBatch(numericTicketIds);
+                    } catch (e) {
+                        paidTickets = await Promise.all(ticketsToPay.map(t => api.payTicket(t.id)));
+                    }
+                }
             } else {
                 paidTickets = ticketsToPay.map(t => ({ ...t, status: 'PAID' }));
+            }
+
+            // Đồng bộ trạng thái ghế sang HELD trên venue-service
+            if (api.isBackendOnline) {
+                try {
+                    const seatIds = ticketsToPay.map(t => t.seatId).filter(Boolean);
+                    await Promise.allSettled(seatIds.map(id => api.patchSeat(id, { status: 'HELD' })));
+                } catch (e) {
+                    console.warn('Lỗi patchSeat HELD khi thanh toán:', e);
+                }
             }
 
             clearInterval(this.holdTimerInterval);
@@ -1151,6 +1218,49 @@ class CinemaApp {
         }
     }
 
+    async executeQuickMockPayment() {
+        if (!this.currentTicket) return;
+        const btn = document.getElementById('btn-quick-mock-pay');
+        btn.disabled = true;
+        btn.innerHTML = '<span>Đang xử lý test tức thì...</span>';
+
+        try {
+            const ticketsToPay = (this.currentTickets && this.currentTickets.length > 0) 
+                ? this.currentTickets : [this.currentTicket];
+            const numericTicketIds = ticketsToPay.map(t => t.id);
+            let paidTickets = [];
+
+            if (api.isBackendOnline) {
+                const payRes = await api.quickMockPay(numericTicketIds);
+                paidTickets = payRes.tickets || ticketsToPay.map(t => ({ ...t, status: 'PAID' }));
+            } else {
+                paidTickets = ticketsToPay.map(t => ({ ...t, status: 'PAID' }));
+            }
+
+            // Đồng bộ trạng thái ghế sang HELD trên venue-service
+            if (api.isBackendOnline) {
+                try {
+                    const seatIds = ticketsToPay.map(t => t.seatId).filter(Boolean);
+                    await Promise.allSettled(seatIds.map(id => api.patchSeat(id, { status: 'HELD' })));
+                } catch (e) {
+                    console.warn('Lỗi patchSeat HELD khi thanh toán test:', e);
+                }
+            }
+
+            clearInterval(this.holdTimerInterval);
+            this.showToast(`⚡ Thanh toán test thành công ${paidTickets.length} vé! Đã cấp E-Ticket.`, 'success');
+            
+            this.closeCheckoutModal();
+            this.openTicketPassModal(paidTickets[0], paidTickets);
+        } catch (err) {
+            console.error('Lỗi thanh toán test:', err);
+            this.showToast(err.message || 'Thanh toán test thất bại, vui lòng thử lại', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span>⚡ Thanh Toán Giả Lập Tức Thì (1-Click Test)</span>';
+        }
+    }
+
     async cancelCurrentTicket() {
         const ticketsToCancel = (this.currentTickets && this.currentTickets.length > 0) 
             ? this.currentTickets : [this.currentTicket];
@@ -1160,6 +1270,12 @@ class CinemaApp {
         try {
             if (api.isBackendOnline) {
                 await Promise.all(ticketsToCancel.map(t => api.cancelTicket(t.id).catch(() => null)));
+                try {
+                    const seatIds = ticketsToCancel.map(t => t.seatId).filter(Boolean);
+                    await Promise.allSettled(seatIds.map(id => api.patchSeat(id, { status: 'AVAILABLE' })));
+                } catch (e) {
+                    console.warn('Lỗi mở lại ghế AVAILABLE:', e);
+                }
             }
             clearInterval(this.holdTimerInterval);
             this.showToast('Đã hủy vé và giải phóng ghế thành công.', 'info');
@@ -2057,18 +2173,40 @@ class CinemaApp {
         grid.innerHTML = '<div class="col-span-10 text-center py-10 text-slate-500 text-xs">⏳ Đang tải sơ đồ 60 ghế từ hệ thống...</div>';
 
         try {
-            let seats = [];
-            if (api.isBackendOnline) {
-                seats = await api.getSeatsByRoom(this.adminSelectedRoomId);
-            } else {
-                seats = MOCK_DATA.generateMockSeats(this.adminSelectedRoomId);
+            // Nạp song song danh sách ghế của phòng và toàn bộ vé đã đặt
+            let [seats, tickets] = await Promise.all([
+                api.isBackendOnline ? api.getSeatsByRoom(this.adminSelectedRoomId) : MOCK_DATA.generateMockSeats(this.adminSelectedRoomId),
+                api.isBackendOnline ? api.getAllTickets().catch(() => []) : (this.adminTickets || [])
+            ]);
+
+            if (Array.isArray(tickets) && tickets.length > 0) {
+                this.adminTickets = tickets;
             }
+
             seats.sort((a, b) => a.id - b.id);
+
+            // Lọc các vé có hiệu lực (Đã thanh toán hoặc đang giữ chỗ)
+            const activeTickets = (this.adminTickets || []).filter(t => 
+                t.status === 'PAID' || t.status === 'PENDING' || t.status === 'BOOKED'
+            );
+
+            // Đối chiếu từng ghế với danh sách vé: nếu có khách đặt thì chuyển sang trạng thái HELD (Đã khóa)
+            seats.forEach(s => {
+                const bookedTicket = activeTickets.find(t => t.seatId === s.id);
+                if (bookedTicket) {
+                    s.isCustomerBooked = true;
+                    s.bookedTicket = bookedTicket;
+                    if (s.status !== 'MAINTENANCE') {
+                        s.status = 'HELD';
+                    }
+                }
+            });
+
             this.adminRoomSeats = seats;
 
             grid.innerHTML = seats.map(s => {
                 let stateClass = 'adm-seat-available-std';
-                if (s.status === 'HELD') {
+                if (s.status === 'HELD' || s.isCustomerBooked) {
                     stateClass = 'adm-seat-held';
                 } else if (s.status === 'MAINTENANCE') {
                     stateClass = 'adm-seat-maint';
@@ -2079,15 +2217,19 @@ class CinemaApp {
                 }
 
                 const isInspected = this.adminSelectedSeat && this.adminSelectedSeat.id === s.id;
+                let tooltip = `Ghế ${s.seatName} (ID: #${s.id}) • ${s.seatType} • ${s.status}`;
+                if (s.bookedTicket) {
+                    tooltip = `Ghế ${s.seatName} (ID: #${s.id}) • ĐÃ CÓ NGƯỜI ĐẶT (Vé #${s.bookedTicket.id} - ${s.bookedTicket.status})`;
+                }
 
                 return `
-                    <button id="adm-seat-btn-${s.id}" onclick="app.selectSeatForInspect(${s.id})" title="Ghế ${s.seatName} (ID: #${s.id}) • ${s.seatType} • ${s.status}" class="adm-seat-item ${stateClass} ${isInspected ? 'active-inspect' : ''}">
+                    <button id="adm-seat-btn-${s.id}" onclick="app.selectSeatForInspect(${s.id})" title="${tooltip}" class="adm-seat-item ${stateClass} ${isInspected ? 'active-inspect' : ''}">
                         ${s.seatName}
                     </button>
                 `;
             }).join('');
 
-            // Tự động inspect ghế đầu tiên nếu chưa chọn
+            // Tự động inspect ghế đầu tiên nếu chưa chọn hoặc giữ ghế đang inspect
             if (!this.adminSelectedSeat && seats.length > 0) {
                 this.selectSeatForInspect(seats[0].id);
             } else if (this.adminSelectedSeat) {
@@ -2131,7 +2273,11 @@ class CinemaApp {
 
         const statusBadge = document.getElementById('adm-inspect-status-badge');
         if (statusBadge) {
-            if (seat.status === 'AVAILABLE') {
+            if (seat.bookedTicket || seat.isCustomerBooked) {
+                const ticketSt = seat.bookedTicket ? seat.bookedTicket.status : 'HELD';
+                statusBadge.className = 'px-2 py-0.5 rounded font-bold text-[10px] bg-red-500/20 text-red-500 border border-red-500/30';
+                statusBadge.textContent = `HELD (Đã Khóa / Đã Đặt - ${ticketSt})`;
+            } else if (seat.status === 'AVAILABLE') {
                 statusBadge.className = 'px-2 py-0.5 rounded font-bold text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
                 statusBadge.textContent = 'AVAILABLE (Có thể bán)';
             } else if (seat.status === 'HELD') {
@@ -2140,6 +2286,27 @@ class CinemaApp {
             } else if (seat.status === 'MAINTENANCE') {
                 statusBadge.className = 'px-2 py-0.5 rounded font-bold text-[10px] bg-orange-500/20 text-orange-400 border border-orange-500/30';
                 statusBadge.textContent = 'MAINTENANCE (Bảo Trì)';
+            }
+        }
+
+        // Hiển thị thông tin khách đặt vé nếu ghế đã được khách đặt
+        const ticketInfoEl = document.getElementById('adm-inspect-ticket-info');
+        const ticketDescEl = document.getElementById('adm-inspect-ticket-desc');
+        if (ticketInfoEl && ticketDescEl) {
+            if (seat.bookedTicket) {
+                ticketInfoEl.classList.remove('hidden');
+                const t = seat.bookedTicket;
+                const statusStr = t.status === 'PAID' ? 'ĐÃ THANH TOÁN (PAID)' : 'ĐANG GIỮ CHỖ (PENDING)';
+                const statusColor = t.status === 'PAID' ? 'text-emerald-700' : 'text-amber-700';
+                ticketDescEl.innerHTML = `
+                    <div>• Mã vé: <b class="font-mono text-amber-950 font-bold">#TK-${t.id}</b></div>
+                    <div>• Trạng thái: <b class="${statusColor} font-bold">${statusStr}</b></div>
+                    <div>• Khách hàng: <b class="text-slate-800">User #${t.userId}</b></div>
+                    <div>• Suất chiếu: <b class="text-slate-800">#${t.showtimeId}</b></div>
+                    <div>• Tiền vé: <b class="text-amber-800 font-bold">${(t.finalPrice || 0).toLocaleString('vi-VN')} đ</b></div>
+                `;
+            } else {
+                ticketInfoEl.classList.add('hidden');
             }
         }
 
@@ -2166,6 +2333,10 @@ class CinemaApp {
                 await api.patchSeat(seatId, patchData);
             }
             this.adminSelectedSeat.status = newStatus;
+            if (newStatus === 'AVAILABLE') {
+                this.adminSelectedSeat.isCustomerBooked = false;
+                this.adminSelectedSeat.bookedTicket = null;
+            }
             this.showToast(`Đã chuyển trạng thái ghế #${seatId} (${this.adminSelectedSeat.seatName}) sang ${newStatus}`, 'success');
 
             // Cập nhật lại giao diện ghế ngay lập tức mà không cần reload

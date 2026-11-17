@@ -110,6 +110,14 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.payTicket(id, userId, false));
     }
 
+    @Operation(summary = "Thanh toán hàng loạt vé trong một đơn")
+    @PostMapping("/tickets/batch-pay")
+    public ResponseEntity<List<Ticket>> payTicketsBatch(@RequestBody @jakarta.validation.Valid com.cinema.booking.dto.BatchPayRequest request,
+                                                       @RequestAttribute("userId") Long userId,
+                                                       Authentication authentication) {
+        return ResponseEntity.ok(ticketService.payTicketsBatch(request.getTicketIds(), userId, isAdmin(authentication)));
+    }
+
     @Operation(summary = "Hủy giữ ghế")
     @PostMapping("/tickets/{id}/cancel")
     public ResponseEntity<Ticket> cancelTicket(@PathVariable Long id,

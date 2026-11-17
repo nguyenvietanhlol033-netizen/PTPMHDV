@@ -1,0 +1,432 @@
+{
+  "info": {
+    "_postman_id": "c6a1b2c3-d4e5-4f6a-8b9c-0d1e2f3a4b5c",
+    "name": "TH6 - Cinema Microservices Integration Tests",
+    "description": "Bộ kiểm thử tích hợp liên dịch vụ (Service Integration & Consumption) phục vụ Bài thực hành số 6 môn PTPMHDV 2026.\nKiểm thử các kịch bản Consumer gọi Provider:\n- Happy Path (200, 201)\n- Lỗi 404 Not Found (Suất chiếu / Ghế / Phòng không tồn tại)\n- Lỗi 409 Conflict (Xung đột đặt ghế)\n- Tính lũy kế Idempotency (Gửi lại cùng Idempotency-Key)\n- Khả năng chịu lỗi Resilience: Timeout, Retry và Fallback (503 Service Unavailable)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "showtimeId",
+      "value": "260",
+      "type": "string"
+    },
+    {
+      "key": "seatIdNormal",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "seatIdVip",
+      "value": "21",
+      "type": "string"
+    },
+    {
+      "key": "idempotencyKey",
+      "value": "e4a706b2-6582-4f11-8288-59ea21f8a70c",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01. Auth - Đăng nhập lấy Token (Setup)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@123456\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "auth", "login"]
+        },
+        "description": "Đăng nhập với tài khoản Admin để nhận JWT Bearer Token, tự động lưu vào biến môi trường {{token}}."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "if (jsonData.accessToken) {",
+              "    pm.collectionVariables.set('token', jsonData.accessToken);",
+              "    console.log('Token saved successfully');",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02. Happy Path - Đặt nhiều vé nguyên tử (Batch Booking 201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{idempotencyKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [{{seatIdNormal}}, {{seatIdVip}}]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Consumer (booking-service) gọi Movie Service (lấy suất chiếu) và Venue Service (lấy ghế), khóa nguyên tử qua Redis Lua script và phát sự kiện RabbitMQ."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 201 Created', function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Response is a list of created tickets', function () {",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.eql(2);",
+              "    pm.expect(jsonData[0]).to.have.property('ticketCode');",
+              "    pm.expect(jsonData[0].status).to.eql('HELD');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03. Happy Path - Sơ đồ ghế theo suất chiếu (Showtime Seat Map 200)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/showtimes/{{showtimeId}}/seats",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "showtimes", "{{showtimeId}}", "seats"]
+        },
+        "description": "Booking Service tổng hợp danh sách ghế phòng từ Venue Service với trạng thái vé thực tế trong CSDL."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Returns aggregated seat statuses with pricing', function () {",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData[0]).to.have.property('seatName');",
+              "    pm.expect(jsonData[0]).to.have.property('finalPrice');",
+              "    pm.expect(jsonData[0]).to.have.property('status');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04. Error 404 - Đặt vé với Suất chiếu không tồn tại (Showtime Not Found)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": 999999,\n  \"seatIds\": [1]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Booking Service gọi ShowtimeClient sang Movie Service -> Movie Service trả về 404 -> Booking Service bắt và chuyển tiếp mã 404 ResourceNotFoundException."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404 Not Found', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Error message mentions Suất chiếu', function () {",
+              "    pm.expect(jsonData.message).to.include('Suất chiếu');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05. Error 404 - Đặt vé với Ghế không tồn tại (Seat Not Found)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [999999]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Booking Service gọi SeatClient sang Venue Service -> Venue Service trả về 404 -> Booking Service trả về 404 Not Found."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404 Not Found', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Error message mentions Ghế', function () {",
+              "    pm.expect(jsonData.message).to.include('Ghế');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06. Error 409 - Xung đột ghế đã bị giữ/đã bán (Seat Conflict)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "99999999-aaaa-bbbb-cccc-111111111111"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [{{seatIdNormal}}, {{seatIdVip}}]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Gửi request mới đặt lại các ghế đã được giữ ở TC02. Redis Lua Script phát hiện khóa và từ chối, trả về 409 Conflict."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 409 Conflict', function () {",
+              "    pm.response.to.have.status(409);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Error message indicates seat is already held or sold', function () {",
+              "    pm.expect(jsonData.message).to.include('giữ hoặc đã bán');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07. Idempotency - Gửi lại cùng Idempotency-Key (Replay Check)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Idempotency-Key",
+            "value": "{{idempotencyKey}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [{{seatIdNormal}}, {{seatIdVip}}]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Gửi lại cùng mã Idempotency-Key của TC02. Hệ thống kiểm tra thấy đã tạo vé nên trả về vé cũ thành công mà không trừ tiền hoặc tạo vé trùng."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200 OK or 201 Created (Idempotent response)', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Returns exactly the same previously booked tickets', function () {",
+              "    pm.expect(jsonData).to.be.an('array');",
+              "    pm.expect(jsonData.length).to.eql(2);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08. Validation - Tạo Suất chiếu với Phòng không tồn tại (Movie -> Venue)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"movieId\": 1,\n  \"roomId\": 999999,\n  \"startTime\": \"2026-11-20T10:00:00\",\n  \"price\": 100000\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/showtimes",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "showtimes"]
+        },
+        "description": "Movie Service đóng vai trò Consumer gọi VenueClient sang Venue Service để xác thực roomId. Do roomId=999999 không tồn tại, trả về 404."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 404 Not Found', function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Error message mentions Phòng chiếu', function () {",
+              "    pm.expect(jsonData.message).to.include('Phòng chiếu');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09. Resilience - Provider Down / Timeout Fallback (503 Service Unavailable)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"showtimeId\": {{showtimeId}},\n  \"seatIds\": [10]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/tickets/batch",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "v1", "tickets", "batch"]
+        },
+        "description": "Kịch bản kiểm thử khi Provider (venue-service hoặc movie-service) bị tắt (docker stop). RemoteCaller retry 3 lần, hết số lần thử trả về 503 Fallback."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 503 Service Unavailable (Fail-closed Fallback)', function () {",
+              "    pm.response.to.have.status(503);",
+              "});",
+              "var jsonData = pm.response.json();",
+              "pm.test('Message contains service unavailable notification', function () {",
+              "    pm.expect(jsonData.message).to.include('không khả dụng');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

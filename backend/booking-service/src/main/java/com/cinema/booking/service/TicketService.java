@@ -461,42 +461,70 @@ public class TicketService {
     // ==========================================
     @Transactional
     public Ticket payTicket(Long id, Long requesterId, boolean admin) {
-        Ticket ticket = lockedTicket(id);
-        assertOwner(ticket, requesterId, admin);
-        if (ticket.getStatus() != TicketStatus.PENDING) throw new ConflictException("Vé không ở trạng thái PENDING");
-        if (!TicketRules.holdValid(ticket.getExpiresAt(), now())) {
-            throw new GoneException("Vé đã hết thời gian giữ ghế");
+        List<Ticket> paid = payTicketsBatch(Collections.singletonList(id), requesterId, admin);
+        return paid.get(0);
+    }
+
+    @Transactional
+    public List<Ticket> payTicketsBatch(List<Long> ticketIds, Long requesterId, boolean admin) {
+        if (ticketIds == null || ticketIds.isEmpty()) {
+            throw new IllegalArgumentException("Danh sách vé thanh toán không được rỗng");
         }
-        ShowtimeInfo showtime = showtimes.getShowtime(ticket.getShowtimeId());
-        if ("CLOSED".equalsIgnoreCase(showtime.getStatus())
-                || showtime.getShowDate() == null || showtime.getStartTime() == null
-                || !TicketRules.isShowtimeBookable(
-                        showtime.getShowDate().atTime(showtime.getStartTime()), now())) {
-            throw new ConflictException("Suất chiếu đã đóng hoặc bắt đầu");
+        // Loại bỏ trùng lặp và sắp xếp ID tăng dần để chống deadlock giao dịch
+        List<Long> sortedIds = ticketIds.stream().filter(Objects::nonNull).distinct().sorted().toList();
+        if (sortedIds.isEmpty()) {
+            throw new IllegalArgumentException("Danh sách vé thanh toán không hợp lệ");
         }
-        String token = redis.opsForValue().get(lockKey(ticket.getShowtimeId(), ticket.getSeatId()));
-        if (token == null || !token.equals(ticket.getLockToken())) {
-            throw new GoneException("Khóa giữ ghế không còn hiệu lực");
+
+        List<Ticket> paidTickets = new ArrayList<>();
+        for (Long id : sortedIds) {
+            Ticket ticket = lockedTicket(id);
+            assertOwner(ticket, requesterId, admin);
+            if (ticket.getStatus() != TicketStatus.PENDING) {
+                throw new ConflictException("Vé #" + id + " không ở trạng thái PENDING");
+            }
+            if (!TicketRules.holdValid(ticket.getExpiresAt(), now())) {
+                throw new GoneException("Vé #" + id + " đã hết thời gian giữ ghế");
+            }
+            ShowtimeInfo showtime = showtimes.getShowtime(ticket.getShowtimeId());
+            if ("CLOSED".equalsIgnoreCase(showtime.getStatus())
+                    || showtime.getShowDate() == null || showtime.getStartTime() == null
+                    || !TicketRules.isShowtimeBookable(
+                            showtime.getShowDate().atTime(showtime.getStartTime()), now())) {
+                throw new ConflictException("Suất chiếu của vé #" + id + " đã đóng hoặc bắt đầu");
+            }
+            String token = redis.opsForValue().get(lockKey(ticket.getShowtimeId(), ticket.getSeatId()));
+            if (token == null || !token.equals(ticket.getLockToken())) {
+                throw new GoneException("Khóa giữ ghế của vé #" + id + " không còn hiệu lực");
+            }
+            SeatClaim claim = claims.findById(SeatClaim.key(ticket.getShowtimeId(), ticket.getSeatId()))
+                    .orElseThrow(() -> new ConflictException("Không tìm thấy quyền giữ ghế SQL cho vé #" + id));
+            if (!ticket.getId().equals(claim.getTicketId())) {
+                throw new ConflictException("Ghế của vé #" + id + " thuộc đơn khác");
+            }
+
+            ticket.setStatus(TicketStatus.PAID);
+            ticket.setPaidAt(now());
+            Ticket saved = tickets.saveAndFlush(ticket);
+            releaseAfterCommit(saved); // Giữ SeatClaim vĩnh viễn cho vé PAID, chỉ giải phóng token Redis
+            paidTickets.add(saved);
         }
-        SeatClaim claim = claims.findById(SeatClaim.key(ticket.getShowtimeId(), ticket.getSeatId()))
-                .orElseThrow(() -> new ConflictException("Không tìm thấy quyền giữ ghế trong SQL"));
-        if (!ticket.getId().equals(claim.getTicketId())) throw new ConflictException("Ghế thuộc đơn khác");
-        ticket.setStatus(TicketStatus.PAID);
-        ticket.setPaidAt(now());
-        Ticket saved = tickets.saveAndFlush(ticket);
-        releaseAfterCommit(saved); // SeatClaim retained forever for PAID ticket.
 
         if (TransactionSynchronizationManager.isSynchronizationActive()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
                 @Override public void afterCommit() {
-                    publishEvent(saved, BookingEvent.TYPE_TICKET_PAID, "Thanh toán thành công vé xem phim");
+                    for (Ticket t : paidTickets) {
+                        publishEvent(t, BookingEvent.TYPE_TICKET_PAID, "Thanh toán thành công vé xem phim");
+                    }
                 }
             });
         } else {
-            publishEvent(saved, BookingEvent.TYPE_TICKET_PAID, "Thanh toán thành công vé xem phim");
+            for (Ticket t : paidTickets) {
+                publishEvent(t, BookingEvent.TYPE_TICKET_PAID, "Thanh toán thành công vé xem phim");
+            }
         }
 
-        return saved;
+        return paidTickets;
     }
 
     @Transactional
@@ -577,6 +605,17 @@ public class TicketService {
             producer.sendBookingEvent(event);
         } catch (Exception e) {
             log.warn("Không gửi được thông báo vé #{}: {}", ticket.getId(), e.toString());
+        }
+
+        // Đồng bộ trạng thái ghế vật lý sang venue-service để Admin nhìn thấy tức thì
+        try {
+            if (BookingEvent.TYPE_TICKET_HELD.equals(eventType) || BookingEvent.TYPE_TICKET_PAID.equals(eventType)) {
+                seats.updateSeatStatus(ticket.getSeatId(), "HELD");
+            } else if (BookingEvent.TYPE_TICKET_CANCELLED.equals(eventType)) {
+                seats.updateSeatStatus(ticket.getSeatId(), "AVAILABLE");
+            }
+        } catch (Exception e) {
+            log.warn("Không đồng bộ được trạng thái ghế #{} sang venue-service: {}", ticket.getSeatId(), e.getMessage());
         }
     }
 

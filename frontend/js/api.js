@@ -376,6 +376,49 @@ class ApiService {
             method: 'DELETE'
         });
     }
+
+    // ==================== PAYMENT APIs ====================
+    async createPayment(ticketIds, paymentMethod = 'VIETQR', idempotencyKey = null) {
+        return this.request('/payments/create', {
+            method: 'POST',
+            headers: idempotencyKey ? { 'Idempotency-Key': idempotencyKey } : {},
+            body: JSON.stringify({ ticketIds, paymentMethod, idempotencyKey })
+        });
+    }
+
+    async mockPay(paymentId) {
+        return this.request(`/payments/${paymentId}/mock-pay`, {
+            method: 'POST'
+        });
+    }
+
+    async quickMockPay(ticketIds) {
+        return this.request('/payments/quick-mock', {
+            method: 'POST',
+            body: JSON.stringify({ ticketIds, paymentMethod: 'MOCK_TEST' })
+        });
+    }
+
+    async payTicketsBatch(ticketIds) {
+        return this.request('/tickets/batch-pay', {
+            method: 'POST',
+            body: JSON.stringify({ ticketIds })
+        });
+    }
+
+    async getPaymentById(paymentId) {
+        return this.request(`/payments/${paymentId}`);
+    }
+
+    async getMyPayments() {
+        return this.request('/payments/my-payments');
+    }
+
+    async cancelPayment(paymentId) {
+        return this.request(`/payments/${paymentId}/cancel`, {
+            method: 'POST'
+        });
+    }
 }
 
 // Khởi tạo Singleton Instance

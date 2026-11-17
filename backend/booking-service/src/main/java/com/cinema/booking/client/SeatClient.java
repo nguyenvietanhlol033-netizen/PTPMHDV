@@ -51,4 +51,19 @@ public class SeatClient {
             }
         });
     }
+
+    public void updateSeatStatus(Long seatId, String status) {
+        if (seatId == null || status == null) return;
+        try {
+            restClient.patch()
+                    .uri("/api/v1/seats/{id}", seatId)
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .body(java.util.Collections.singletonMap("status", status))
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (Exception e) {
+            org.slf4j.LoggerFactory.getLogger(SeatClient.class)
+                    .warn("Không thể đồng bộ trạng thái ghế #{} sang {}: {}", seatId, status, e.getMessage());
+        }
+    }
 }

@@ -23,6 +23,25 @@ FROM tickets t WHERE t.status='PAID';
 -- Historical pending are made EXPIRED instead of being silently accepted without a lock token.
 UPDATE tickets SET status='EXPIRED' WHERE status='PENDING' AND lock_token IS NULL;
 
+-- Payment Transactions table
+CREATE TABLE IF NOT EXISTS payments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    transaction_code VARCHAR(64) NOT NULL UNIQUE,
+    user_id BIGINT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    payment_method VARCHAR(32) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    ticket_ids VARCHAR(255) NOT NULL,
+    idempotency_key VARCHAR(100) NULL,
+    qr_url VARCHAR(500) NULL,
+    note VARCHAR(255) NULL,
+    created_at DATETIME(6) NOT NULL,
+    paid_at DATETIME(6) NULL,
+    INDEX idx_payments_user_id (user_id),
+    INDEX idx_payments_transaction_code (transaction_code),
+    CONSTRAINT uk_payment_user_idem UNIQUE (user_id, idempotency_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 USE movie_db;
 ALTER TABLE movies ADD COLUMN duration_minutes INT NULL;
 UPDATE movies SET duration_minutes=120 WHERE duration_minutes IS NULL; -- Verify actual movie lengths after migration.
